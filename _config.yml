@@ -1,0 +1,60 @@
+# Site settings
+title: Yujin GitHub Page
+email: fairies@poscoict.com
+description: >
+  한글도 지원되나? 
+  GitHub Page를 통해 사이트를 만들수가 있답니다. 
+url: https://jinfromkorean.github.io
+
+# Build settings
+theme: minima
+#port: 4000
+#host: 192.168.247.246
+timezone: Asia/Seoul
+markdown: kramdown
+highlighter: rouge
+excerpt_separator: <!--more-->
+permalink: /articles/:year-:month/:title
+
+kramdown:
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  enable_coderay: false
+
+owner:
+  name: Yujin
+  avatar: todo.jpg
+  job: "Software developer"
+  bio: ""
+  email: "fairies@poscoict.com"
+  disqus-shortname: jin
+  twitter: #username
+  facebook: jin
+  google:
+    plus: #username
+    analytics: 
+    verify:
+    ad-client: 
+    ad-slot:
+  bing-verify:
+  github: jinfromkorea
+  gitlab: #username
+  stackoverflow: #123456/username   from a "http://stackoverflow.com/users/123456/username" link
+  linkedin: jin
+  skype: #username
+  xing: #username
+  instagram: jin
+  lastfm: #username
+  tumblr: #username
+  pinterest: #username
+  foursquare: #username
+  steam: #username
+  dribbble: #username
+  youtube: #username
+  soundcloud: #username
+  weibo: #username
+  flickr: #username
+  500px: #username
+  codepen: #username
