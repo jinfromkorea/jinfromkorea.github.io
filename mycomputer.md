@@ -4,17 +4,72 @@ title: My Computer
 permalink: /about/
 ---
 
-## My Computer
+### OS
 
-1. OS : Windows 7 Enterprise K ( 64bit )
+Windows 7 Enterprise K ( 64bit )  
+맥이랑 리눅스는 잘 모름. 프로그램은 윈도우용으로만 설치해서 사용함. 
 
-2. 프로그램 : Java, Tomcat
+***
 
-   C:\Android\jdk1.8.0_144
+### 프로그램 
 
-   C:\Android\apache-tomcat-8.5.16
+뭔가 설치는 했는데.. 빠진게 있을 수 있음. 
 
-3. 인증서 : POSCOICT_CA_256.cer 
+ * Chrome  
+ 대부분 크롬 브라우저에서 테스트를 진행함. 아직까지는 별도의 확장프로그램을 설치하진 않았음. 
+
+ * Java  
+ 압축이 풀린 형태로 사용하고 경로는 다음과 같음. JAVA_HOME을 매번 지정해서 사용함. 
+
+> C:\Android\jdk1.8.0_144
+
+ * Tomcat  
+ Binary Distributions의 zip 형태의 Core 를 사용했고 설치경로는 다음과 같음.   
+ 설치폴더/bin/setclasspath.bat 에 JAVA_HOME 을 추가해서 사용함.
+
+> C:\Android\apache-tomcat-8.5.16
+
+ * Sublime Text 3
+
+ * Git
+
+ * GitHub Desktop
+
+ * Node.js
+
+ * Ruby
+
+ * Docker
+
+
+
+***
+
+### 설치가 끝이 아니다. 
+
+
+C:\Users\hwangyujin\AppData\Roaming\npm;  
+C:\Users\hwangyujin\AppData\Local\GitHubDesktop\bin  
+C:\Ruby24-x64\bin;  
+C:\ProgramData\Oracle\Java\javapath;  
+C:\Program Files (x86)\AMD APP\bin\x86_64;  
+C:\Program Files (x86)\AMD APP\bin\x86;  
+C:\Program Files (x86)\Intel\iCLS Client\;  
+C:\Program Files\Intel\iCLS Client\;  
+C:\Windows\system32;  
+C:\Windows;  
+C:\Windows\System32\Wbem;  
+C:\Windows\System32\WindowsPowerShell\v1.0\;  
+C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;  
+C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;  
+C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;  
+C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;  
+C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;  
+C:\Raycloud;  
+C:\Program Files\nodejs\;  
+C:\Program Files\Git\cmd  
+
+1. 인증서 : POSCOICT_CA_256.cer 
 
    C:\Android\jdk1.8.0_144\jre\lib\security\ 위치에 cacerts 파일이 있음. 
 
