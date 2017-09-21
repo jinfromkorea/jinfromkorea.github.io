@@ -236,8 +236,8 @@ function pc_onaddstream(event){
     // pc.setRemoteDescription() 이 불리면.. 
     console.log(event); //MediaStreamEvent
     remoteVideo.srcObject = event.stream;
-    document.getElementById('remoteVideo'   ).style = "display:block; transform:scaleX(-1);";
-    document.getElementById('localVideo'    ).style = "display:block; width:20%;position:absolute;left:20px;top:20px; transform:scaleX(-1);";
+    document.getElementById('remoteVideo'   ).style = "display:block;";
+    document.getElementById('localVideo'    ).style = "display:block; width:20%;position:absolute;left:20px;top:20px;";
 }
 function pc_onremovestream(event){
     console.log(event);
