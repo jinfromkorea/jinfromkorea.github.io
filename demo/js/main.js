@@ -3,7 +3,6 @@ var yourId = Math.floor(Math.random()*1000000000);
 var roomId;
 document.getElementById('name').value = "guest-"+yourId;
 
-
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyDKEYRybMQOAkpMZp2F3bTvQFboa2VJgrI",
@@ -53,7 +52,7 @@ localVideo.addEventListener('loadedmetadata', function() {
 
     //database4user.on('child_added'  , function(childSnapshot, prevChildKey){});
     //database4user.on('value'        , function(dataSnapshot){});
-    database4user.on('child_removed', function(oldChildSnapshot){console.log(oldChildSnapshot)});
+    database4user.on('child_removed', database_users_on_child_removed);
     //database4user.on('child_changed', function(childSnapshot, prevChildKey){});
     //database4user.on('child_moved'  , function(childSnapshot, prevChildKey){});
 
@@ -64,13 +63,12 @@ remoteVideo.addEventListener('loadedmetadata', function() {
     console.log('[loadedmetadata]Remote video videoWidth: ' + this.videoWidth +'px,  videoHeight: ' + this.videoHeight + 'px')
 });
 window.addEventListener('beforeunload', function(){
-// https://developer.mozilla.org/en-US/docs/Web/Events/unload
+    // https://developer.mozilla.org/en-US/docs/Web/Events/unload
     console.log("[beforeunload]where are you going?");
     button_onclick_hangup();
 });
 window.addEventListener('unload', function(){
     console.log("[unload]where are you going?");
-    //alert("나갑니다.");
 });
 
 
@@ -85,29 +83,40 @@ function button_onclick_start() {
 
 function button_onclick_hangup() {
     console.log('[가][hangup] Close RTCPeerConnection ' + (new Date()) );
-    pc.close();
+    if(pc!=null && pc.signalingState!="closed"){
+        console.log('[가][hangup] ' + pc.signalingState );
+        pc.close(); 
+    }
     console.log('[가][hangup] Close RTCPeerConnection .. end');
-    if ( database4room != null )
+    if ( database4room != null ){
+        database4ice.off('child_added'  , database_ice_on_child_added);
+        database4sdp.off('child_added'  , database_sdp_on_child_added);
+        database4user.off('child_removed', database_users_on_child_removed);
+        database4user.once("value").then(function(dataSnapshot){
+            console.log('[나][hangup] Delete user ');
+            dataSnapshot.forEach(function(data){
+                if( yourId == data.val().sender){
+                    firebase.database().ref(roomId+"/users/"+data.key).set(null);
+                    roomId = null;
+                }
+            })
+            console.log('[나][hangup] Delete user .. end');
+        });
         database4room.once("value").then(function(dataSnapshot){
-            console.log('[나][hangup] check db ' + (new Date()) );
-            console.log( dataSnapshot.val().count );
-            if ( dataSnapshot.val().count == 1 ){
-                console.log(roomId);
+            console.log('[다][hangup] Change user count');
+            if ( dataSnapshot.val().count==1 ){
                 database4room.set(null);
-                database4user.set(null);
-                //firebase.database().ref(roomId).remove();
             }else{
                 database4room.set({count:dataSnapshot.val().count-1});
             }
-            database4ice.off('child_added'  , database_ice_on_child_added);
-            database4sdp.off('child_added'  , database_sdp_on_child_added);
-            console.log('[나][hangup] check db .. end' );
+            console.log('[다][hangup] Change user count .. end');
+            //database4user.off('child_removed'  , database_sdp_on_child_added);
         });
+    }
 
     document.getElementById("videos"        ).style.display = "none";
     document.getElementById('localVideo'    ).style = "display:block;"; // 원래대로. 
     document.getElementById("room-selection").style.display = "block";
-    roomId = null;
 }
 
 function database_rooms_once_value_count(dataSnapshot){
@@ -185,6 +194,14 @@ function database_rooms_once_value(dataSnapshot){
     database4user.push({sender:JSON.stringify(yourId), url:window.location.href, platform:navigator.platform, userAgent:navigator.userAgent });
 }
 
+function database_users_on_child_removed(oldChildSnapshot){
+    if ( yourId != oldChildSnapshot.val().sender ){
+        console.log('[라][hangup] Catched');
+        document.getElementById('localVideo'    ).style = "display:block;"; // 원래대로. 
+        document.getElementById('remoteVideo'   ).style = "display:none";
+        console.log('[라][hangup] Catched .. end');
+    }
+}
 function database_sdp_on_child_added ( childSnapshot, prevChildKey ){
     var sender = childSnapshot.val().sender;
     var msg = JSON.parse(childSnapshot.val().message);
