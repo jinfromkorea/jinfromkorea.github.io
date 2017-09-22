@@ -66,6 +66,7 @@ remoteVideo.addEventListener('loadedmetadata', function() {
 window.addEventListener('beforeunload', function(){
 // https://developer.mozilla.org/en-US/docs/Web/Events/unload
     console.log("[beforeunload]where are you going?");
+    button_onclick_hangup();
 });
 window.addEventListener('unload', function(){
     console.log("[unload]where are you going?");
@@ -83,9 +84,12 @@ function button_onclick_start() {
 }
 
 function button_onclick_hangup() {
+    console.log('[가][hangup] Close RTCPeerConnection ' + (new Date()) );
+    pc.close();
+    console.log('[가][hangup] Close RTCPeerConnection .. end');
     if ( database4room != null )
         database4room.once("value").then(function(dataSnapshot){
-            console.log('[click][hangup][1] reduce count ' + (new Date()) );
+            console.log('[나][hangup] check db ' + (new Date()) );
             console.log( dataSnapshot.val().count );
             if ( dataSnapshot.val().count == 1 ){
                 console.log(roomId);
@@ -95,22 +99,15 @@ function button_onclick_hangup() {
             }else{
                 database4room.set({count:dataSnapshot.val().count-1});
             }
-            console.log('[click][hangup][1] reduce count .. end' );
-        })
-
-    console.log('[click][hangup][2] detache callbacks');
-    database4ice.off('child_added'  , database_ice_on_child_added);
-    database4sdp.off('child_added'  , database_sdp_on_child_added);
-    console.log('[click][hangup][2] detache callbacks .. end');
+            database4ice.off('child_added'  , database_ice_on_child_added);
+            database4sdp.off('child_added'  , database_sdp_on_child_added);
+            console.log('[나][hangup] check db .. end' );
+        });
 
     document.getElementById("videos"        ).style.display = "none";
     document.getElementById('localVideo'    ).style = "display:block;"; // 원래대로. 
     document.getElementById("room-selection").style.display = "block";
     roomId = null;
-    console.log('Ending call');
-    pc.close();
-    //pc = null;
-    console.log('[click][hangup][n] .. end');
 }
 
 function database_rooms_once_value_count(dataSnapshot){
