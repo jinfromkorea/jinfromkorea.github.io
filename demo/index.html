@@ -19,10 +19,16 @@
   <div id="videos" class="hidden">
     <div>
       <button id="hangupButton">Hang Up</button>
+      <button id="textButton">Open Text</button>
+      <button id="fileButton">Open File</button>
     </div>
     <div style="position:relative;">
       <video id="remoteVideo" autoplay playsinline></video>
       <video id="localVideo" autoplay muted playsinline></video>
+    </div>
+    <div>
+      <textarea id="dataChannelSend" disabled placeholder="Press Start, enter some text, then press Send."></textarea>
+      <button>Send</button>
     </div>
   </div>
   <div id="room-selection">

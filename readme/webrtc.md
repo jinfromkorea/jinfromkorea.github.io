@@ -1,6 +1,5 @@
 ---
 layout: page
-title: WebRTC
 ---
 
 Promise 참고시.   
@@ -12,3 +11,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arro
 
 A Guide to Creating and Hosting a Personal Website on GitHub  
 http://jmcglone.com/guides/github-pages/
+
+video 겹치게 배치하기 위해  
+https://www.w3schools.com/jsref/prop_style_position.asp
+
+markdown syntax 참고시  
+https://daringfireball.net/projects/markdown/syntax

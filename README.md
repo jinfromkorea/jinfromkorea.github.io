@@ -1,2 +1,5 @@
-# jinfromkorea.github.io
-Yujin Page
+---
+layout: home
+title: note
+permalink: /posts/
+---

@@ -1,5 +1,5 @@
 # Site settings
-title: Yujin GitHub Page
+title: 지니 사이트입니다.
 email: fairies@poscoict.com
 description: >
   한글도 지원되나? 
@@ -29,8 +29,8 @@ owner:
   job: "Software developer"
   bio: ""
   email: "fairies@poscoict.com"
-  disqus-shortname: jin
-  twitter: #username
+  disqus-shortname: #username
+  twitter: julyujin
   facebook: jin
   google:
     plus: #username
@@ -42,10 +42,10 @@ owner:
   github: jinfromkorea
   gitlab: #username
   stackoverflow: #123456/username   from a "http://stackoverflow.com/users/123456/username" link
-  linkedin: jin
+  linkedin: #username
   skype: #username
   xing: #username
-  instagram: jin
+  instagram: #username
   lastfm: #username
   tumblr: #username
   pinterest: #username
