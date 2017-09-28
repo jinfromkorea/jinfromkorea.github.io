@@ -12,44 +12,103 @@
   <base target="_blank">
   <title>YUJIN 1:1 Peer connection</title>
   <link rel="icon" sizes="192x192" href="./images/webrtc-icon-192x192.png">
-  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="./css/main.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 </head>
 <body>
-  <div id="videos" class="hidden">
-    <div>
-      <button id="hangupButton">Hang Up</button>
-      <button id="textButton">Open Text</button>
-      <button id="fileButton">Open File</button>
+  <div id="login_page" class="hidden">
+    <div class="imgcontainer">
+      <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="Avatar" class="avatar">
     </div>
-    <div style="position:relative;">
-      <video id="remoteVideo" autoplay playsinline></video>
-      <video id="localVideo" autoplay muted playsinline></video>
+    <div class="container">
+      <label><b>이메일</b></label>
+      <input type="email" id="email" placeholder="이메일을 입력하세요" required>
+      <label><b>패스워드</b></label>
+      <input type="password" id="password" placeholder="패스워드를 입력하세요" required>
+      <button id="signin"><span class="fa fa-sign-in"> 로그인</span></button>
     </div>
-    <div>
-      <textarea id="dataChannelSend" disabled placeholder="Press Start, enter some text, then press Send."></textarea>
-      <button>Send</button>
+    <div class="container">
+      <button id="cancel_signin">Sign Up</button>
+      <span class="psw">패스워드 분실</span>
     </div>
   </div>
-  <div id="room-selection">
-  	<p>방이름을 입력하세요.</p>
-  	방번호 : <input type=text id="room-id" value="room-1">
-  	<br>
-  	사용자 이름 : <input type=text id="name">
-    <button id="startButton">입장</button>
-    <br>
-  	방번호는 문자,숫자,언더바(_),하이픈(-) 만 가능해요.
-    <hr>
-    윈도우/맥PC는 크롬 또는 Firefox브라우저를 사용해 주세요. <br>
-    안드로이드 계열 스마트기기 사용자는 크롬브라우저를 사용해주세요.<br>
-    아이폰은 iOS 11에서 사파리 브라우저를 사용해주세요. <br>
+  <div id="signup_page" class="hidden">
+    <div class="container">
+      <label><b>이메일</b></label>
+      <input type="email" id="signup_email" placeholder="이메일을 입력하세요" required>
+      <label><b>패스워드</b></label>
+      <input type="password" id="singup_password" placeholder="패스워드를 입력하세요" required>
+      <label><b>패스워드 한번 더</b></label>
+      <input type="password" id="singup_password_repeat" placeholder="패스워드를 한번 더 입력하세요" required>
+      <div class="clearfix">
+        <button id="cancel_signup">취소</button>
+        <button id="signup">SignUp</button>
+      </div>
+    </div>
+  </div>
+  <div id="room_page" class="hidden">
+    <header class="container">
+      <button id="signout"><span class="fa fa-sign-out"> SingOut</span></button>
+      <div id="logon_email"></div>
+    </header>
+    <div class="container">
+      <div class="imgcontainer">
+        <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="Avatar" class="avatar">
+      </div>
+    </div>
+    <div class="container">
+      <label><b>방번호</b></label>
+      <input type="text" id="room-id" placeholder="방번호를 입력하세요" required>
+      <button id="startButton"><span class="fa fa-users"> 입장<span></button>
+    </div>
+    <div class="container">
+      방번호는 문자,숫자,언더바(_),하이픈(-) 만 가능해요.<br>
+      윈도우/맥PC는 크롬 또는 Firefox브라우저를 사용해 주세요. <br>
+      안드로이드 계열 스마트기기 사용자는 크롬브라우저를 사용해주세요.<br>
+      아이폰은 iOS 11에서 사파리 브라우저를 사용해주세요. <br>
+    </div>
+  </div>
+  <div id="video_page" class="hidden">
+    <div id="roomInfo" class="container">
+      <label>방:</label><span></span>
+      <button id="inviteButton" class="hidden"><i class="material-icons">call</i></button><!-- call/call_end -->
+    </div>
+    <div style="position:relative;">
+      <div id="remoteDiv">
+        <video id="remoteVideo" autoplay playsinline></video>
+      </div>
+      <div id="localDiv">
+        <video id="localVideo" autoplay muted playsinline></video>
+        <button><i id="cameraButton" class="material-icons">camera_front</i></button><!-- camera_front/camera_rear -->
+      </div>
+      <button id="hangupButton" class="hidden"><i class="material-icons">call_end</i></button>
+    </div>
+
+    <div>
+      <button id="inviteButton"><i class="material-icons">call</i></button>
+      <button id="textButton"><i class="material-icons">perm_phone_msg</i></button>
+      <button id="fileButton"><i class="material-icons">attach_file</i></button>
+      <button><i class="material-icons">mic</i></button>
+      <button><i class="material-icons">mic_off</i></button>
+      <button><i class="material-icons">videocam</i></button>
+      <button><i class="material-icons">videocam_off</i></button>
+      <button><i class="material-icons">screen_share</i></button>
+      <button><i class="material-icons">stop_screen_share</i></button>
+      <button><i class="material-icons">volume_off</i></button>
+      <button><i class="material-icons">volume_up</i></button>
+      <button><i class="material-icons">volume_down</i></button>
+      <textarea id="dataChannelSend" disabled placeholder="Press Start, enter some text, then press Send."></textarea>
+      <button id="sendButton">Send</button>
+    </div>
   </div>
 <!-- https://www.html5rocks.com/en/tutorials/webrtc/basics/ 참고 
 'adapter.js' is a JavaScript shim for WebRTC, maintained by Google with help from the WebRTC community, that abstracts vendor prefixes, browser differences and spec changes
 'adapter.js'는 브라우저의 차이. spec의 변화를 추상화하였다. 
 -->
   <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
   <script src="./js/main.js"></script>
 </body>
 </html>
