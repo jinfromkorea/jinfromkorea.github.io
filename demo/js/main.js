@@ -44,6 +44,7 @@ var localStream = null;
 document.getElementById('startButton' ).onclick = button_onclick_start;
 document.getElementById('inviteButton').onclick = function(){console.log('not yet')};
 document.getElementById('hangupButton').onclick = button_onclick_hangup;
+document.getElementById('cameraButton').onclick = button_onclick_camera;
 document.getElementById('textButton'  ).onclick = button_onclick_text;
 document.getElementById('sendButton'  ).onclick = button_onclick_send;
 document.getElementById('signup').onclick =  button_onclick_signup;
@@ -202,6 +203,12 @@ function button_onclick_hangup() {
     document.getElementById('room_page').style.display = "block";
     document.getElementById('video_page').style.display = "none";
     document.getElementById('localVideo'    ).style = "display:block;"; // 원래대로. 
+}
+function button_onclick_camera(){
+    if ( document.getElementById('cameraButton').getElementByTagName('i').innerHTML == 'camera_front')
+        document.getElementById('cameraButton').getElementByTagName('i').innerHTML = 'camera_rear';
+    else
+        document.getElementById('cameraButton').getElementByTagName('i').innerHTML = 'camera_front';    
 }
 
 function database_users_on_child_removed(oldChildSnapshot){
