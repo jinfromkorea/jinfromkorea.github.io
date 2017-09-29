@@ -263,6 +263,7 @@ function pc_onaddstream(event){
     document.getElementById('remoteVideo').srcObject = event.stream;
     document.getElementById('remoteVideo').style = "display:block;";
     document.getElementById('localVideo' ).style = "display:block; width:20%;position:absolute;left:20px;top:20px;";
+    document.getElementById('inviteButton').disabled = false;
 }
 
 function button_onclick_signup(){
@@ -273,9 +274,16 @@ function button_onclick_signup(){
 function button_onclick_signin(){
     email = document.getElementById('email').value;
     password = document.getElementById('password').value;
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(error => {console.log(error);alert(error.message)});
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(error => {
+        console.log(error);alert(error.message);
+        if(error.code=='auth/user-not-found'){
+            document.getElementById('signup_page').style.display = "block";
+            document.getElementById('login_page').style.display = "none";
+        }
+    });
 }
 function button_onclick_signout(){
+    document.getElementById('room_page').style.display = "none";
     firebase.auth().signOut().then( () => console.log("sign out") ).catch(error=> console.log(error));
 }
 function button_onclick_text(){

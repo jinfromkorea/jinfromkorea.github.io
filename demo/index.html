@@ -42,16 +42,16 @@
       <input type="password" id="singup_password" placeholder="패스워드를 입력하세요" required>
       <label><b>패스워드 한번 더</b></label>
       <input type="password" id="singup_password_repeat" placeholder="패스워드를 한번 더 입력하세요" required>
-      <div class="clearfix">
-        <button id="cancel_signup">취소</button>
-        <button id="signup">SignUp</button>
+      <div>
+        <button id="signup"><span class="fa fa-check"> SignUp</span></button>
+        <button id="cancel_signup"><span class="fa fa-close"> 취소</span></button>&nbsp;
       </div>
     </div>
   </div>
   <div id="room_page" class="hidden">
     <header class="container">
       <button id="signout"><span class="fa fa-sign-out"> SingOut</span></button>
-      <div id="logon_email"></div>
+      <div id="logon_email">not yet</div>
     </header>
     <div class="container">
       <div class="imgcontainer">
@@ -72,7 +72,7 @@
   </div>
   <div id="video_page" class="hidden">
     <div id="roomInfo" class="container">
-      <label>방:</label><span></span>
+      <label>방 : </label><span>not yet</span>
       <button id="inviteButton" class="hidden"><i class="material-icons">call</i></button><!-- call/call_end -->
     </div>
     <div style="position:relative;">
@@ -81,13 +81,13 @@
       </div>
       <div id="localDiv">
         <video id="localVideo" autoplay muted playsinline></video>
-        <button><i id="cameraButton" class="material-icons">camera_front</i></button><!-- camera_front/camera_rear -->
       </div>
-      <button id="hangupButton" class="hidden"><i class="material-icons">call_end</i></button>
+      <div id="btnDiv" style="position:absolute;">
+        <button id="hangupButton" class="hidden"><i class="material-icons">call_end</i></button>
+        <button id="cameraButton" class="hidden"><i class="material-icons">camera_front</i></button><!-- camera_front/camera_rear -->
+      </div>
     </div>
-
     <div>
-      <button id="inviteButton"><i class="material-icons">call</i></button>
       <button id="textButton"><i class="material-icons">perm_phone_msg</i></button>
       <button id="fileButton"><i class="material-icons">attach_file</i></button>
       <button><i class="material-icons">mic</i></button>

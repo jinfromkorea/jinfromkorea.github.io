@@ -13,9 +13,6 @@ body, div, p, button, header, section {
 }
 header {
   background-color: lightgray;
-  height: 30px;
-  vertical-align: middle;
-  text-align: left;
 }
 header div #logon_email {
   margin-left: 10px;
@@ -26,11 +23,13 @@ header div #logon_email {
 button {
   background-color: #d84a38;
   /* border: none; */
+  border: none;
   border-radius: 10px;
   color: white;
+  cursor: pointer;
   /* font-size: 0.8em; */
   /* margin: 0 0 1em 0; */
-  padding: 0.4em 0.6em 0.5em 0.6em; /* top right bottom left */
+  padding: 0.5em 0.6em 0.5em 0.6em; /* top right bottom left */
 }
 button:active {
   background-color: #cf402f;
@@ -48,20 +47,35 @@ button#signin, button#startButton{
   width: 100%;
   padding: 14px 20px;
   margin: 8px 0;
-  border: none;
-  cursor: pointer;
   font-size: 1.1em;
 }
-button#signout{
-  cursor: pointer;
-  position: absolute;
-  right: 16px;
+button#signup, button#cancel_signup{
+  width: 50%;
+  padding: 14px 20px;
+  margin: 8px 0;
+  font-size: 1.1em;
+  float: left;
 }
-button#hangupButton{
-  cursor: pointer;
-  position: absolute;
-  right: 16px;
+button#signout{
+  position: relative;
+  float: right;
+  top:-11px;
+  padding: 1em;
+}
+button#inviteButton{
+  position: relative;
+  float: right;
+  top:-11px;
+}
+#btnDiv{
+  width: 50px;
   top: 16px;
+  right:16px;  
+}
+#btnDiv button{
+  /* button#hangupButton, button#cameraButton */
+  float: right;
+  margin: 0 0 10px 0;
 }
 button#cancel{
   width:auto;
@@ -82,7 +96,7 @@ input[type=email], input[type=password], input[type=text]{
   position: relative;
 }
 */
-#login_page .container, #room_page .container, #video_page .container{
+#login_page .container, #room_page .container, #video_page .container, #signup_page .container{
   padding: 16px;
 }
 .imgcontainer{
