@@ -207,14 +207,15 @@ function button_onclick_hangup() {
     document.getElementById('localVideo'    ).style = "display:block;"; // 원래대로. 
 }
 function button_onclick_camera(){
+    pc.close();
     console.log('[1][camera] Change Icon');
     cameraFront  = !cameraFront;
     document.getElementById('camera_front').style.display = cameraFront ? 'none':'block';
     document.getElementById('camera_rear').style.display = cameraFront ? 'block':'none';
     console.log('[1][camera] Change Icon .. end');
     console.log('[2][camera] Requesting local stream');
-    videoConstraints = { video: { facingMode: (cameraFront ? "user" : "environment") } };
-    navigator.mediaDevices.getUserMedia({audio:true, videoConstraints}) // MediaStream 객체를 return함. 
+    videoConstraints = { audio:true, video: { facingMode: (cameraFront ? "user" : "environment") } };
+    navigator.mediaDevices.getUserMedia(videoConstraints) // MediaStream 객체를 return함. 
     .then( stream => {
         console.log(stream);
         localStream = stream;
