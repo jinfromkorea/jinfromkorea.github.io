@@ -205,10 +205,10 @@ function button_onclick_hangup() {
     document.getElementById('localVideo'    ).style = "display:block;"; // 원래대로. 
 }
 function button_onclick_camera(){
-    if ( document.getElementById('cameraButton').getElementByTagName('i').innerHTML == 'camera_front')
-        document.getElementById('cameraButton').getElementByTagName('i').innerHTML = 'camera_rear';
+    if ( document.getElementById('cameraButton').getElementsByTagName('i').innerHTML == 'camera_front')
+        document.getElementById('cameraButton').getElementsByTagName('i').innerHTML = 'camera_rear';
     else
-        document.getElementById('cameraButton').getElementByTagName('i').innerHTML = 'camera_front';    
+        document.getElementById('cameraButton').getElementsByTagName('i').innerHTML = 'camera_front';    
 }
 
 function database_users_on_child_removed(oldChildSnapshot){
