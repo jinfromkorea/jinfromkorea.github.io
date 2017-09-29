@@ -5,6 +5,7 @@ var servers = {'iceServers': [{'urls': 'stun:stun.services.mozilla.com'},
                               {'urls': 'stun:stun.l.google.com:19302'}, 
                               {'urls': 'turn:numb.viagenie.ca','credential': 'yujin','username': 'yujin@email.com'}]};
 var cameraCnt = 0;
+var cameraFront = false;
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyDKEYRybMQOAkpMZp2F3bTvQFboa2VJgrI",
@@ -205,10 +206,9 @@ function button_onclick_hangup() {
     document.getElementById('localVideo'    ).style = "display:block;"; // 원래대로. 
 }
 function button_onclick_camera(){
-    if ( document.getElementById('cameraButton').getElementsByTagName('i').innerHTML == 'camera_front')
-        document.getElementById('cameraButton').getElementsByTagName('i').innerHTML = 'camera_rear';
-    else
-        document.getElementById('cameraButton').getElementsByTagName('i').innerHTML = 'camera_front';    
+    cameraFront  = !cameraFront;
+    document.getElementById('camera_front').style.display = cameraFront ? 'block':'none';
+    document.getElementById('camera_rear').style.display = cameraFront ? 'none':'block';
 }
 
 function database_users_on_child_removed(oldChildSnapshot){
