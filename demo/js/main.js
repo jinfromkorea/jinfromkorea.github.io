@@ -4,7 +4,7 @@ var roomId;
 var servers = {'iceServers': [{'urls': 'stun:stun.services.mozilla.com'}, 
                               {'urls': 'stun:stun.l.google.com:19302'}, 
                               {'urls': 'turn:numb.viagenie.ca','credential': 'yujin','username': 'yujin@email.com'}]};
-
+var cameraCnt = 0;
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyDKEYRybMQOAkpMZp2F3bTvQFboa2VJgrI",
@@ -29,7 +29,10 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 
-navigator.mediaDevices.enumerateDevices().then( deviceInfos => {console.log(deviceInfos)} ).catch( error => console.log(error) );
+navigator.mediaDevices.enumerateDevices().then( deviceInfos => { 
+    deviceInfos.forEach( deviceInfo => { if(deviceInfo.kind=='videoinput'){cameraCnt++} } ); 
+    console.log(deviceInfos);
+} ).catch( error => console.log(error) );
 
 var database4user = null; // firebase.database() 변수
 var database4sdp = null;  // firebase.database() 변수
@@ -92,6 +95,8 @@ function button_onclick_start() {
             document.getElementById('remoteVideo').style.display = "none";
             document.getElementById('inviteButton').style.display = "block";
             document.getElementById('hangupButton').style.display = "block";
+            if( cameraCnt > 1 )
+            document.getElementById('cameraButton').style.display = "block";
             // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia 참고.
             // https://w3c.github.io/mediacapture-main/getusermedia.html 참고.
             navigator.mediaDevices.getUserMedia({audio:true, video:true}) // MediaStream 객체를 return함. 
@@ -267,9 +272,9 @@ function pc_onaddstream(event){
 }
 
 function button_onclick_signup(){
-    email = document.getElementById('email').value;
-    password = document.getElementById('password').value;
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(error => {console.log(error);alert(error.message)});
+    email = document.getElementById('signup_email').value;
+    password = document.getElementById('singup_password').value;
+    firebase.auth().createUserWithEmailAndPassword(email, password).then( () => {document.getElementById('signup_page').style.display = "none";}).catch(error => {console.log(error);alert(error.message)});
 }
 function button_onclick_signin(){
     email = document.getElementById('email').value;
@@ -279,6 +284,7 @@ function button_onclick_signin(){
         if(error.code=='auth/user-not-found'){
             document.getElementById('signup_page').style.display = "block";
             document.getElementById('login_page').style.display = "none";
+            document.getElementById('signup_email').value = document.getElementById('email').value;
         }
     });
 }
