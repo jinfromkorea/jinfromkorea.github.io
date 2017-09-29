@@ -207,21 +207,24 @@ function button_onclick_hangup() {
     document.getElementById('localVideo'    ).style = "display:block;"; // 원래대로. 
 }
 function button_onclick_camera(){
+    console.log('[1][camera] Change Icon');
     cameraFront  = !cameraFront;
     document.getElementById('camera_front').style.display = cameraFront ? 'none':'block';
     document.getElementById('camera_rear').style.display = cameraFront ? 'block':'none';
+    console.log('[1][camera] Change Icon .. end');
+    console.log('[2][camera] Requesting local stream');
     videoConstraints = { video: { facingMode: (cameraFront ? "user" : "environment") } };
     navigator.mediaDevices.getUserMedia({audio:true, videoConstraints}) // MediaStream 객체를 return함. 
     .then( stream => {
         console.log(stream);
         localStream = stream;
         document.getElementById('localVideo').srcObject = stream; // localVideo.addEventListener('loadedmetadata', ..) 참고.
-        console.log('[2][start] Requesting local stream .. end');
+        console.log('[2][camera] Requesting local stream .. end');
     }).catch( error => {
-        console.log('[2][start] Requesting local stream .. error ' + error.name);
+        console.log('[2][camera] Requesting local stream .. error ' + error.name);
         console.log(error);
     })
-    
+
 }
 
 function database_users_on_child_removed(oldChildSnapshot){
