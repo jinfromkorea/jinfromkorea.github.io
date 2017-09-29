@@ -207,7 +207,6 @@ function button_onclick_hangup() {
     document.getElementById('localVideo'    ).style = "display:block;"; // 원래대로. 
 }
 function button_onclick_camera(){
-    pc.close();
     console.log('[1][camera] Change Icon');
     cameraFront  = !cameraFront;
     document.getElementById('camera_front').style.display = cameraFront ? 'none':'block';
