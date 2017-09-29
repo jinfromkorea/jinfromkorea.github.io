@@ -6,6 +6,7 @@ var servers = {'iceServers': [{'urls': 'stun:stun.services.mozilla.com'},
                               {'urls': 'turn:numb.viagenie.ca','credential': 'yujin','username': 'yujin@email.com'}]};
 var cameraCnt = 0;
 var cameraFront = false;
+var videoConstraints;
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyDKEYRybMQOAkpMZp2F3bTvQFboa2VJgrI",
@@ -63,8 +64,8 @@ window.onbeforeunload = button_onclick_hangup; //window.addEventListener('before
 /* 방에 입장할 경우 */
 function button_onclick_start() {
     console.log('[1][start] Check Room ' + (new Date()) );
-    roomId = document.getElementById('room-id').value;
-    document.querySelector('#roomInfo span').innerHTML = '방:'+roomId;
+    roomId = '_' + document.getElementById('room-id').value;
+    document.querySelector('#roomInfo span').innerHTML = roomId;
     document.querySelector("button#textButton").disabled = true;
     document.querySelector("button#fileButton").disabled = true;
     // https://firebase.google.com/docs/reference/js/firebase.database.Reference#once 참고. 
@@ -207,8 +208,20 @@ function button_onclick_hangup() {
 }
 function button_onclick_camera(){
     cameraFront  = !cameraFront;
-    document.getElementById('camera_front').style.display = cameraFront ? 'block':'none';
-    document.getElementById('camera_rear').style.display = cameraFront ? 'none':'block';
+    document.getElementById('camera_front').style.display = cameraFront ? 'none':'block';
+    document.getElementById('camera_rear').style.display = cameraFront ? 'block':'none';
+    videoConstraints = { video: { facingMode: (cameraFront ? "user" : "environment") } };
+    navigator.mediaDevices.getUserMedia({audio:true, videoConstraints}) // MediaStream 객체를 return함. 
+    .then( stream => {
+        console.log(stream);
+        localStream = stream;
+        document.getElementById('localVideo').srcObject = stream; // localVideo.addEventListener('loadedmetadata', ..) 참고.
+        console.log('[2][start] Requesting local stream .. end');
+    }).catch( error => {
+        console.log('[2][start] Requesting local stream .. error ' + error.name);
+        console.log(error);
+    })
+    
 }
 
 function database_users_on_child_removed(oldChildSnapshot){
