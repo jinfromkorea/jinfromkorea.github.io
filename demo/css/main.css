@@ -56,7 +56,7 @@ button#signup, button#cancel_signup{
   font-size: 1.1em;
   float: left;
 }
-button#signout{
+button#signout, button#join{
   position: relative;
   float: right;
   top:-11px;

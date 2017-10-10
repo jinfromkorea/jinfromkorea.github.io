@@ -5,7 +5,10 @@ var servers = {'iceServers': [{'urls': 'stun:stun.services.mozilla.com'},
                               {'urls': 'stun:stun.l.google.com:19302'}, 
                               {'urls': 'turn:numb.viagenie.ca','credential': 'yujin','username': 'yujin@email.com'}]};
 var cameraCnt = 0;
+var micCnt = 0;
 var cameraFront = false;
+var micOn = true;
+var videoOn = true;
 var videoConstraints;
 // Initialize Firebase
 var config = {
@@ -32,7 +35,10 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 navigator.mediaDevices.enumerateDevices().then( deviceInfos => { 
-    deviceInfos.forEach( deviceInfo => { if(deviceInfo.kind=='videoinput'){cameraCnt++} } ); 
+    deviceInfos.forEach( deviceInfo => { 
+        if(deviceInfo.kind=='videoinput'){cameraCnt++}
+        else if(deviceInfo.kind=='audioinput'){micCnt++} 
+    } ); 
     console.log(deviceInfos);
 } ).catch( error => console.log(error) );
 
@@ -47,6 +53,8 @@ document.getElementById('startButton' ).onclick = button_onclick_start;
 document.getElementById('inviteButton').onclick = function(){console.log('not yet')};
 document.getElementById('hangupButton').onclick = button_onclick_hangup;
 document.getElementById('cameraButton').onclick = button_onclick_camera;
+document.getElementById('micButton'   ).onclick = button_onclick_mic;
+document.getElementById('videoButton' ).onclick = button_onclick_video;
 document.getElementById('textButton'  ).onclick = button_onclick_text;
 document.getElementById('sendButton'  ).onclick = button_onclick_send;
 document.getElementById('signup').onclick =  button_onclick_signup;
@@ -100,6 +108,9 @@ function button_onclick_start() {
             document.getElementById('hangupButton').style.display = "block";
             if( cameraCnt > 1 )
             document.getElementById('cameraButton').style.display = "block";
+            if( micCnt > 0 )
+            document.getElementById('micButton').style.display = "block";
+            document.getElementById('videoButton').style.display = "block";
             // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia 참고.
             // https://w3c.github.io/mediacapture-main/getusermedia.html 참고.
             navigator.mediaDevices.getUserMedia({audio:true, video:true}) // MediaStream 객체를 return함. 
@@ -225,6 +236,22 @@ function button_onclick_camera(){
         console.log(error);
     })
 
+}
+function button_onclick_mic(){
+    micOn = !micOn;
+    document.getElementById('mic'    ).style.display = micOn ? 'none':'block';
+    document.getElementById('mic_off').style.display = micOn ? 'block':'none';
+    pc.getSenders().forEach( sender => {
+        if(sender.track.kind == 'audio'){ sender.track.enabled = !sender.track.enabled }
+    });
+}
+function button_onclick_video(){
+    videoOn = !videoOn;
+    document.getElementById('videocam'    ).style.display = videoOn ? 'none':'block';
+    document.getElementById('videocam_off').style.display = videoOn ? 'block':'none';
+    pc.getSenders().forEach( sender => {
+        if(sender.track.kind == 'video'){ sender.track.enabled = !sender.track.enabled }
+    });
 }
 
 function database_users_on_child_removed(oldChildSnapshot){
