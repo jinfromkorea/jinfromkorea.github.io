@@ -2,7 +2,7 @@ html {
   /* avoid annoying page width change when moving from the home page */
   overflow-y: scroll;
 }
-body, div, p, button, header, section {
+body, div, p, button, header, section, video, textarea {
   border: 0;
   margin: 0;
   padding: 0;
@@ -14,7 +14,7 @@ body, div, p, button, header, section {
 header {
   background-color: lightgray;
 }
-header div #logon_email {
+header div #logon_email, header div #roomInfo {
   margin-left: 10px;
   line-height: 30px;
   vertical-align: bottom;
@@ -56,17 +56,13 @@ button#signup, button#cancel_signup{
   font-size: 1.1em;
   float: left;
 }
-button#signout, button#join{
+button#signout, button#hangupButton{
   position: relative;
   float: right;
   top:-11px;
   padding: 1em;
 }
-button#inviteButton{
-  position: relative;
-  float: right;
-  top:-11px;
-}
+
 #btnDiv{
   width: 50px;
   top: 16px;
