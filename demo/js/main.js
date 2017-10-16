@@ -57,12 +57,12 @@ var dc; //RTCDataChannel 변수
 var localStream = null;
 
 document.getElementById('startButton' ).onclick = button_onclick_start; // 입장 버튼 
-document.getElementById('hangupButton').onclick = button_onclick_hangup; // 
+document.getElementById('hangupButton').onclick = button_onclick_hangup; // 나가기 버튼
 document.getElementById('cameraButton').onclick = button_onclick_camera; // 전후방 카메라 전환 버튼
 document.getElementById('micButton'   ).onclick = button_onclick_mic;    // 마이스 enable/disable 전환 버튼
 document.getElementById('videoButton' ).onclick = button_onclick_video;  // 비디오 enable/disable 전환 버튼 
 document.getElementById('textButton'  ).onclick = button_onclick_text;   // 텍스트창 버튼   
-document.getElementById('sendButton'  ).onclick = button_onclick_send;
+document.getElementById('sendButton'  ).onclick = button_onclick_send;   //
 document.getElementById('signup'      ).onclick = button_onclick_signup; // 가입(SignUp) 버튼 
 document.getElementById('signin'      ).onclick = button_onclick_signin; // 로그인 버튼 
 document.getElementById('signout'     ).onclick = button_onclick_signout; // 로그아웃 버튼. 
@@ -181,29 +181,52 @@ function _createPeerConnection(){
     dc.onerror             = function(e){console.log(e)};
     dc.onmessage           = function(e){console.log(e);
         var receivedData = JSON.parse(e.data); console.log(receivedData);
-        if( receivedData.cmd == 'changeView'){
+        if( receivedData.cmd == 'open'){
             console.log('[MSG] Change Icon');
             dataChannelOn = !dataChannelOn;
             document.getElementById('perm_phone_msg').style.display = dataChannelOn ? 'none':'block';
+            document.querySelector("button#fileButton").disabled = !dataChannelOn;
             document.getElementById('media').style.display = dataChannelOn ? 'none':'block';
             document.getElementById('data').style.display = dataChannelOn ? 'block':'none';
             console.log('[MSG] Change Icon .. end');
-            _initMessageBox( receivedData.user + '방 개설 완료' );
+            _updateMessageBox( true, false, '채팅이 시작되었습니다.' );
+        }else if(receivedData.cmd == 'chat'){
+            _updateMessageBox( false, false, receivedData.msg );
         }
     };
     dc.onopen              = function(e){console.log(e);
         dc.send(JSON.stringify({'user': yourId}));
     };
 }
-function _initMessageBox( msg ){
-    document.querySelector("button#fileButton").disabled = !dataChannelOn;
-    document.getElementById('messageBox').style.height = (document.documentElement.clientHeight - document.getElementById('data').offsetTop*2) + 'px';
-    document.getElementById('messageBox').childNodes.forEach( node => node.remove() );
+function _updateMessageBox( isInit, isMine, msg ){
+    if( isInit ){
+        document.getElementById('messageBox').style.height = (document.documentElement.clientHeight - document.getElementById('data').offsetTop*2 - 20) + 'px';
+        document.getElementById('messageBox').childNodes.forEach( node => node.remove() );
+        document.getElementById('msg').style.width = ( document.documentElement.clientWidth - document.getElementById('sendButton').clientWidth - 10 ) + 'px';
+    }
     var el = document.createElement("p");
+    el.style.textAlign = isMine ? 'right':'left';
     var textNode = document.createTextNode(msg);
     el.appendChild(textNode);
     document.getElementById('messageBox').appendChild(el);
 }
+function button_onclick_text(){
+    console.log('[MSG] Change Icon');
+    dataChannelOn = !dataChannelOn;
+    document.getElementById('perm_phone_msg').style.display = dataChannelOn ? 'none':'block';
+    document.getElementById('media').style.display = dataChannelOn ? 'none':'block';
+    document.getElementById('data').style.display = dataChannelOn ? 'block':'none';
+    dc.send(JSON.stringify({'user': yourId, 'cmd':'open', 'cameraFront':cameraFront}));
+    console.log('[MSG] Change Icon .. end');
+    _updateMessageBox( true, false, '채팅이 시작되었습니다.' );
+}
+function button_onclick_send(){
+    var msg = document.getElementById('msg').value;
+    document.getElementById('msg').value = ''; // 입력창은 지워주고.. 
+    _updateMessageBox( false, true, msg  );
+    dc.send(JSON.stringify({'user': yourId, 'cmd':'chat', 'msg': '' + msg }));
+}
+
 function video_onloadedmetadata_start_local() {
     console.log('<video/> onloadedmetadata -> videoWidth: ' + this.videoWidth +'px,  videoHeight: ' + this.videoHeight + 'px');
     console.log('<video/> onloadedmetadata : addTrack on pc(RTCPeerConnection)');
@@ -333,17 +356,6 @@ function button_onclick_video(){
         if(sender.track.kind == 'video'){ sender.track.enabled = !sender.track.enabled }
     });
 }
-function button_onclick_text(){
-    console.log('[MSG] Change Icon');
-    dataChannelOn = !dataChannelOn;
-    document.getElementById('perm_phone_msg').style.display = dataChannelOn ? 'none':'block';
-    document.getElementById('media').style.display = dataChannelOn ? 'none':'block';
-    document.getElementById('data').style.display = dataChannelOn ? 'block':'none';
-    dc.send(JSON.stringify({'user': yourId, 'cmd':'changeView', 'cameraFront':cameraFront}));
-    console.log('[MSG] Change Icon .. end');
-    _initMessageBox( '방 개설' );
-}
-
 
 function database_users_on_child_removed(oldChildSnapshot){
     if ( yourId != oldChildSnapshot.val().sender ){
@@ -389,7 +401,4 @@ function button_onclick_signin(){
 function button_onclick_signout(){
     document.getElementById('room_page').style.display = "none";
     firebase.auth().signOut().then( () => console.log("sign out") ).catch(error=> console.log(error));
-}
-function button_onclick_send(){
-    console.log('send button clicked');
 }

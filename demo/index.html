@@ -83,17 +83,26 @@
       <div id="localDiv">
         <video id="localVideo" autoplay muted playsinline></video>
       </div>
-      <div id="btnDiv" style="position:absolute;">
+      <div id="btnMediaDiv" style="position:absolute;">
         <button id="cameraButton" class="hidden"><i id="camera_front" class="material-icons hidden">camera_front</i><i id="camera_rear" class="material-icons">camera_rear</i></button><!-- camera_front/camera_rear -->
         <button id="micButton" class="hidden"><i id="mic" class="material-icons hidden">mic</i><i id="mic_off" class="material-icons">mic_off</i></button>
         <button id="videoButton" class="hidden"><i id="videocam" class="material-icons hidden">videocam</i><i id="videocam_off" class="material-icons">videocam_off</i></button>
-        <button id="textButton" class="hidden"><i id="perm_phone_msg" class="material-icons">perm_phone_msg</i></button>
+        <button id="textButton" class="hidden"><i id="perm_phone_msg" class="material-icons">chat</i></button>
       </div>
     </div>
     <div id='data' style="position:relative;" class="hidden">
       <div id="messageBox"><p>not yet</p></div>
-      <div><textarea id="dataChannelSend" placeholder="Enter some text, then press Send."></textarea><button id="sendButton">Send</button></div>
+      <div>
+        <button id="sendButton">Send</button>
+        <textarea id="msg" placeholder="Enter some text, then press Send."></textarea>
+      </div>
+      <div id="btnDataDiv" style="position:absolute;">
+        <button id="mediaButton"><i class="material-icons">voice_chat</i></button>
+        <button id="deleteButton"><i class="material-icons">delete</i></button>
+      </div>
     </div>
+  </div>
+  <div id="msg_page" class="hidden">
     <div>
       <button id="inviteButton"><i class="material-icons">call</i></button><!-- call/call_end -->
       <button id="fileButton"><i class="material-icons">attach_file</i></button>

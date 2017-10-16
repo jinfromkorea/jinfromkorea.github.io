@@ -2,7 +2,7 @@ html {
   /* avoid annoying page width change when moving from the home page */
   overflow-y: scroll;
 }
-body, div, p, button, header, section, video, textarea {
+body, div, p, button, header, section, video{
   border: 0;
   margin: 0;
   padding: 0;
@@ -19,10 +19,19 @@ header div #logon_email, header div #roomInfo {
   line-height: 30px;
   vertical-align: bottom;
 }
-
+input, textarea{
+  font-size: 1em;
+}
+div #data #messageBox{
+  background-color: aliceblue;
+  padding: 10px;
+}
+textarea #msg{
+  background-color: snow;
+  padding:10px;
+}
 button {
   background-color: #d84a38;
-  /* border: none; */
   border: none;
   border-radius: 10px;
   color: white;
@@ -59,16 +68,27 @@ button#signup, button#cancel_signup{
 button#signout, button#hangupButton{
   position: relative;
   float: right;
-  top:-11px;
+  top: -11px;
+  padding: 1em;
+}
+button#sendButton{
+  position: relative;
+  float: right;
+  top: 0px;
   padding: 1em;
 }
 
-#btnDiv{
+#btnMediaDiv{
   width: 50px;
   top: 16px;
-  right:16px;  
+  right: 16px;  
 }
-#btnDiv button{
+#btnDataDiv{
+  width: 50px;
+  bottom: 60px;
+  right: 6px;  
+}
+#btnMediaDiv button, btnDataDiv button{
   /* button#hangupButton, button#cameraButton */
   float: right;
   margin: 0 0 10px 0;
