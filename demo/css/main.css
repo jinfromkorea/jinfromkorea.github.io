@@ -26,9 +26,9 @@ div #data #messageBox{
   background-color: aliceblue;
   padding: 10px;
 }
-textarea #msg{
+textarea#msg{
   background-color: snow;
-  padding:10px;
+  padding: 10px;
 }
 button {
   background-color: #d84a38;

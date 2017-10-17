@@ -18,8 +18,9 @@
 </head>
 <body>
   <div>
-    <input type="url" id="url" style="border:1px solid #ccc" size=50>
+    <input type="url" id="url" style="border:1px solid #ccc" size=40>
     <button id="add">Add</button>
+    <button id="remove">Remove</button>
   </div>
   <div id="list">
   </div>
@@ -36,16 +37,31 @@ var config = {
 };
 firebase.initializeApp(config);
 var database = firebase.database().ref('/dummy_urls');
-database.once('value', function(snapshot){
-  snapshot.forEach(data => {
-    console.log(data.val());
+
+
+database.on('child_added', function(childSnapshot, prevChildKey){console.log(childSnapshot.val());console.log(prevChildKey)
     var el = document.createElement("p");
-    var textNode = document.createTextNode(data.val().URL);
+    var textNode = document.createTextNode(childSnapshot.val().URL);
     el.appendChild(textNode);
     document.getElementById('list').appendChild(el);
-  });
-})
-document.getElementById('add' ).onclick = button_onclick_add; // 입장 버튼 
+});
+database.on('child_removed', function(childSnapshot, prevChildKey){refreshList();});
+function refreshList(){
+  document.querySelectorAll("p").forEach( el => document.getElementById('list').removeChild(el));
+
+  database.once('value', function(snapshot){
+    snapshot.forEach(data => {
+      console.log(data.val());
+      var el = document.createElement("p");
+      var textNode = document.createTextNode(data.val().URL);
+      el.appendChild(textNode);
+      document.getElementById('list').appendChild(el);
+    });
+  })
+}
+
+document.getElementById('add' ).onclick = button_onclick_add;
+document.getElementById('remove' ).onclick = button_onclick_remove;
 function button_onclick_add(){
   console.log('clicked add button');
   var input = document.getElementById('url').value;
@@ -57,9 +73,25 @@ function button_onclick_add(){
         started:firebase.database.ServerValue.TIMESTAMP,
         URL:input
     });
-    document.getElementById('add').value = '';
+    document.getElementById('url').value = '';
   }
 }
+function button_onclick_remove(){
+  console.log('clicked remove button');
+  var input = document.getElementById('url').value;
+  console.log(input);
+  if ( input != null & input.length>0 ){
+    database.once('value', function(snapshot){
+      snapshot.forEach(data => {
+        if ( data.val().URL == input ) {
+          firebase.database().ref("/dummy_urls/"+data.key).set(null);
+        }
+      });
+    })
+    document.getElementById('url').value = '';
+  }
+}
+
   </script>
 </body>
 </html>

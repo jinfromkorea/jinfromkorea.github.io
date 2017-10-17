@@ -14,7 +14,6 @@
   <link rel="icon" sizes="192x192" href="./images/webrtc-icon-192x192.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="./css/main.css" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 </head>
 <body>
@@ -34,24 +33,36 @@ var config = {
 };
 firebase.initializeApp(config);
 var database = firebase.database().ref('/dummy_urls');
-database.once('value', function(snapshot){
-  snapshot.forEach(data => {
-    console.log(data.val());
+database.on('child_added', function(childSnapshot, prevChildKey){console.log(childSnapshot.val());console.log(prevChildKey)
     var el_p = document.createElement("p");
     var el_a = document.createElement("a");
-    var textNode = document.createTextNode(data.val().URL);
-    var attr = document.createAttribute("href");
-    attr.value = data.val().URL;
-    el_a.setAttributeNode(attr);
+    var textNode = document.createTextNode(childSnapshot.val().URL);
+    var hrefAttr = document.createAttribute("href");
+    hrefAttr.value = childSnapshot.val().URL;
+    el_a.setAttributeNode(hrefAttr);
     el_a.appendChild(textNode);
     el_p.appendChild(el_a);
     document.getElementById('list').appendChild(el_p);
-  });
-})
+});
+database.on('child_removed', function(childSnapshot, prevChildKey){refreshList();});
+function refreshList(){
+  document.querySelectorAll("p").forEach( el => document.getElementById('list').removeChild(el));
 
-
-database.on('child_added', function(childSnapshot, prevChildKey){});
-database.on('child_moved', function(childSnapshot, prevChildKey){});
+  database.once('value', function(snapshot){
+    snapshot.forEach(data => {
+      console.log(data.val());
+      var el_p = document.createElement("p");
+      var el_a = document.createElement("a");
+      var textNode = document.createTextNode(data.val().URL);
+      var hrefAttr = document.createAttribute("href");
+      hrefAttr.value = data.val().URL;
+      el_a.setAttributeNode(hrefAttr);
+      el_a.appendChild(textNode);
+      el_p.appendChild(el_a);
+      document.getElementById('list').appendChild(el_p);
+    });
+  })
+}
   </script>
 </body>
 </html>

@@ -61,7 +61,8 @@ document.getElementById('hangupButton').onclick = button_onclick_hangup; // 나�
 document.getElementById('cameraButton').onclick = button_onclick_camera; // 전후방 카메라 전환 버튼
 document.getElementById('micButton'   ).onclick = button_onclick_mic;    // 마이스 enable/disable 전환 버튼
 document.getElementById('videoButton' ).onclick = button_onclick_video;  // 비디오 enable/disable 전환 버튼 
-document.getElementById('textButton'  ).onclick = button_onclick_text;   // 텍스트창 버튼   
+document.getElementById('textButton'  ).onclick = button_onclick_text;   // 텍스트창 버튼  
+document.getElementById('mediaButton' ).onclick = button_onclick_text;   // 텍스트창 버튼  
 document.getElementById('sendButton'  ).onclick = button_onclick_send;   //
 document.getElementById('signup'      ).onclick = button_onclick_signup; // 가입(SignUp) 버튼 
 document.getElementById('signin'      ).onclick = button_onclick_signin; // 로그인 버튼 
@@ -200,9 +201,9 @@ function _createPeerConnection(){
 }
 function _updateMessageBox( isInit, isMine, msg ){
     if( isInit ){
-        document.getElementById('messageBox').style.height = (document.documentElement.clientHeight - document.getElementById('data').offsetTop*2 - 20) + 'px';
+        document.getElementById('messageBox').style.height = (document.documentElement.clientHeight - document.getElementById('data').offsetTop*2 - 20 - 10) + 'px';
         document.getElementById('messageBox').childNodes.forEach( node => node.remove() );
-        document.getElementById('msg').style.width = ( document.documentElement.clientWidth - document.getElementById('sendButton').clientWidth - 10 ) + 'px';
+        document.getElementById('msg').style.width = ( document.documentElement.clientWidth - document.getElementById('sendButton').clientWidth - 10 - 20 ) + 'px';
     }
     var el = document.createElement("p");
     el.style.textAlign = isMine ? 'right':'left';
@@ -218,7 +219,7 @@ function button_onclick_text(){
     document.getElementById('data').style.display = dataChannelOn ? 'block':'none';
     dc.send(JSON.stringify({'user': yourId, 'cmd':'open', 'cameraFront':cameraFront}));
     console.log('[MSG] Change Icon .. end');
-    _updateMessageBox( true, false, '채팅이 시작되었습니다.' );
+    _updateMessageBox( true, false, dataChannelOn?'채팅이 시작되었습니다.':'채팅이 종료되었습니다.' );
 }
 function button_onclick_send(){
     var msg = document.getElementById('msg').value;
