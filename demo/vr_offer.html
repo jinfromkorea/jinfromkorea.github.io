@@ -18,8 +18,8 @@
 </head>
 <body>
   <div>
-    <video id="remoteVideo" autoplay playsinline></video>
-    <button id="answerBtn">Answer</button>
+    <button id="offer1Btn">I'm Remote 1</button>
+    <button id="offer2Btn">I'm Remote 2</button>
   </div>
   <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
   <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
@@ -38,19 +38,28 @@ var servers = {'iceServers': [{'urls': 'stun:stun.services.mozilla.com'},
                               {'urls': 'stun:stun.l.google.com:19302'}, 
                               {'urls': 'turn:numb.viagenie.ca','credential': 'yujin','username': 'yujin@email.com'}]};
 var pc = new RTCPeerConnection();
-pc.ontrack = function(e){ 
-    document.getElementById('remoteVideo').srcObject = e.streams[0];
-};
-
-document.getElementById('answerBtn').onclick = function(){
-    firebase.database().ref('/test/offer/sdp').once('value',function(snapshot){ 
-        console.log( JSON.parse(snapshot.val()).sdp );
-        pc.setRemoteDescription( new RTCSessionDescription( JSON.parse(snapshot.val()).sdp ) 
-        ).then( () => pc.createAnswer() 
-        ).then( answer => pc.setLocalDescription( answer ) 
-        ).then( () => firebase.database().ref('/test/answer/sdp').set( JSON.stringify({'sdp':pc.localDescription}) ) );
-    });
+document.getElementById('offer1Btn').onclick = function(){
+    navigator.mediaDevices.getUserMedia({audio:true, video:true})
+    .then( stream => { stream.getTracks().forEach( track => pc.addTrack(track, stream) ); return; })
+    .then( () => {
+        pc.createOffer()
+        .then( offer => pc.setLocalDescription(offer))
+        .then( ()    => {var msg = firebase.database().ref('/vr/offer/sdp').push( JSON.stringify({'pc':'pc1','sdp':pc.localDescription}) );msg.remove(); } );
+    })
 }
+document.getElementById('offer2Btn').onclick = function(){
+    navigator.mediaDevices.getUserMedia({audio:true, video:true})
+    .then( stream => { stream.getTracks().forEach( track => pc.addTrack(track, stream) ); return; })
+    .then( () => {
+        pc.createOffer()
+        .then( offer => pc.setLocalDescription(offer))
+        .then( ()    => {var msg = firebase.database().ref('/vr/offer/sdp').push( JSON.stringify({'pc':'pc2','sdp':pc.localDescription}) );msg.remove(); } );
+    })
+}
+firebase.database().ref('/vr/answer/sdp').on('child_added',function(snapshot){ 
+        console.log( JSON.parse(snapshot.val()).sdp );
+        pc.setRemoteDescription( new RTCSessionDescription( JSON.parse(snapshot.val()).sdp ) );
+    });
   </script>
 </body>
 </html>
