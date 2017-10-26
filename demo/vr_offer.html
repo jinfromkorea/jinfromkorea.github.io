@@ -18,8 +18,8 @@
 </head>
 <body>
   <div>
-    <button id="offer1Btn">I'm Remote 1</button>
-    <button id="offer2Btn">I'm Remote 2</button>
+    <button id="offer1Btn">I'm Remote 1 for Phone</button>
+    <button id="offer2Btn">I'm Remote 2 for Desktop</button>
   </div>
   <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
   <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
@@ -40,7 +40,7 @@ var servers = {'iceServers': [{'urls': 'stun:stun.services.mozilla.com'},
 var pc = new RTCPeerConnection(servers);
 var pc1 = true;
 document.getElementById('offer1Btn').onclick = function(){
-    navigator.mediaDevices.getUserMedia({audio:true, video:true})
+    navigator.mediaDevices.getUserMedia({audio:true, video: { facingMode: "environment" }})
     .then( stream => { stream.getTracks().forEach( track => pc.addTrack(track, stream) ); return; })
     .then( () => {
         pc.createOffer()
