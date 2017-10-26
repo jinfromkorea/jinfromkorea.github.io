@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="WebRTC code samples">
+  <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+  <meta itemprop="description" content="Client-side WebRTC code samples">
+  <meta itemprop="image" content="./images/webrtc-icon-192x192.png">
+  <meta itemprop="name" content="WebRTC code samples">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta id="theme-color" name="theme-color" content="#ffffff">
+  <base target="_blank">
+  <title>YUJIN Urls</title>
+  <link rel="icon" sizes="192x192" href="./images/webrtc-icon-192x192.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+</head>
+<body>
+  <div>
+    <video id="remoteVideo" autoplay playsinline></video>
+    <button id="answerBtn">Answer</button>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script>
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyDKEYRybMQOAkpMZp2F3bTvQFboa2VJgrI",
+    authDomain: "test-webrtc-56501.firebaseapp.com",
+    databaseURL: "https://test-webrtc-56501.firebaseio.com",
+    projectId: "test-webrtc-56501",
+    storageBucket: "test-webrtc-56501.appspot.com",
+    messagingSenderId: "1044697177062"
+};
+firebase.initializeApp(config);
+var servers = {'iceServers': [{'urls': 'stun:stun.services.mozilla.com'}, 
+                              {'urls': 'stun:stun.l.google.com:19302'}, 
+                              {'urls': 'turn:numb.viagenie.ca','credential': 'yujin','username': 'yujin@email.com'}]};
+var pc = new RTCPeerConnection();
+/*
+pc.onicecandidate = function(e){
+    if(e.candidate){
+        firebase.database().ref('/test/answer/ice').push( JSON.stringify({'ice':e.candidate}) );
+    }else{
+        console.log('no more candidate');
+    }
+};
+*/
+pc.ontrack = function(e){ 
+    document.getElementById('remoteVideo').srcObject = e.streams[0];
+};
+document.getElementById('answerBtn').onclick = function(){
+    firebase.database().ref('/test/offer/sdp').once('value',function(snapshot){ 
+        console.log( JSON.parse(snapshot.val()).sdp );
+        pc.setRemoteDescription( new RTCSessionDescription( JSON.parse(snapshot.val()).sdp ) 
+        ).then( () => pc.createAnswer() 
+        ).then( answer => pc.setLocalDescription( answer ) 
+        ).then( () => firebase.database().ref('/test/answer/sdp').set( JSON.stringify({'sdp':pc.localDescription}) ) );
+    });
+}
+  </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+  <meta itemprop="image" content="./images/webrtc-icon-192x192.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta id="theme-color" name="theme-color" content="#ffffff">
+  <base target="_blank">
+  <title>YUJIN WebVR</title>
+  <link rel="icon" sizes="192x192" href="./images/webrtc-icon-192x192.png">
+  <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+  <!-- aframe.js 밑에다 environment component 를 추가해야함. --> 
+</head>
+<body>
+  <a-scene id="scene">
+    <a-assets>
+      <video id="localStream" autoplay></video>
+      <video id="remoteStream" autoplay></video>
+    </a-assets>
+    <a-entity environment="preset: forest; numDressing: 500"></a-entity>
+    <!--
+  -->
+    <a-camera>
+      <a-cursor></a-cursor>
+    </a-camera>
+  </a-scene>
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+  <script>
+var cameraSource = (function(global) {
+  var id = 'source-camera', title = 'Camera', videoElement = null, constraints = { video: true };
+  function start(opts) {
+    console.log('#####################################start');
+    console.log(opts);
+    if (opts.constraints) {
+      constraints = opts.constraints;
+    }
+    videoElement = opts.videoElement;
+    showCameraPreview(opts.callback);
+  }
+  function showCameraPreview(_callbcak) {
+    console.log('#####################################showCameraPreview');
+    console.log(_callbcak);
+    navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+      console.log('#####################################getUserMedia');
+      if (videoElement) {
+        videoElement.srcObject = stream;
+        //videoElement.play();
+        console.log('#####################################play');
+      }
+      if (_callbcak) {
+        _callbcak(stream);
+      }
+    }, function(err) { console.error(err); });
+  }
+
+  return {
+    id: id,
+    title: title,
+    start: start
+  };
+})(this);
+  </script>
+  <script>
+function onReady() {
+  console.log('#####################################DOMContentLoaded');
+  var vid = document.querySelector('#localStream');
+  cameraSource.start({
+    videoElement: vid,
+    constraints: {
+      video: true,
+      facingMode: "environment"
+    },
+    callback: function(_stream) {
+      console.log('#####################################callback');
+      var getUserMedia = document.querySelector('#localStream');
+      console.log(vid.srcObject);
+      vid.play();
+      console.log(_stream);
+      var scene = document.querySelector('#scene');
+      var aobj = document.createElement('a-video');
+      aobj.setAttribute('id', 'local');
+      aobj.setAttribute('src', '#localStream' );
+      aobj.setAttribute('position', '0 1.5 -2');
+      aobj.setAttribute('rotation', '0 0 0');
+      aobj.setAttribute('scale', '1.5 1 0.1');
+      aobj.setAttribute('playsinline', 'true');
+      scene.appendChild(aobj);
+      var aobj2 = document.createElement('a-video');
+      aobj2.setAttribute('id', 'local');
+      aobj2.setAttribute('src', '#localStream' );
+      aobj2.setAttribute('position', '1.6 1.5 -1.6');
+      aobj2.setAttribute('rotation', '0 -30 0');
+      aobj2.setAttribute('scale', '1.5 1 0.1');
+      aobj2.setAttribute('playsinline', 'true');
+      scene.appendChild(aobj2);
+      var aobj3 = document.createElement('a-video');
+      aobj3.setAttribute('id', 'local');
+      aobj3.setAttribute('src', '#localStream' );
+      aobj3.setAttribute('position', '-1.6 1.5 -1.6');
+      aobj3.setAttribute('rotation', '0 30 0');
+      aobj3.setAttribute('scale', '1.5 1 0.1');
+      aobj3.setAttribute('playsinline', 'true');
+      scene.appendChild(aobj3);
+    }
+  });
+}
+document.addEventListener('DOMContentLoaded', onReady);
+  </script>
+</body>
+</html>
