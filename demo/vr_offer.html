@@ -40,7 +40,7 @@ var servers = {'iceServers': [{'urls': 'stun:stun.services.mozilla.com'},
 var pc = new RTCPeerConnection(servers);
 var pc1 = true;
 document.getElementById('offer1Btn').onclick = function(){
-    navigator.mediaDevices.getUserMedia({audio:true, video: { facingMode: "environment" }})
+    navigator.mediaDevices.getUserMedia({audio:true, video:{ facingMode:"environment" } })
     .then( stream => { stream.getTracks().forEach( track => pc.addTrack(track, stream) ); return; })
     .then( () => {
         pc.createOffer()

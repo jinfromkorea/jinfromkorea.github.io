@@ -21,9 +21,7 @@
       <video id="remote1Stream" autoplay></video>
       <video id="remote2Stream" autoplay></video>
     </a-assets>
-    <!--
     <a-entity environment="preset: forest; numDressing: 500"></a-entity>
-  -->
     <a-camera>
       <a-cursor></a-cursor>
     </a-camera>
@@ -153,7 +151,7 @@ function onReady() {
     var vid = document.querySelector('#localStream');
     cameraSource.start({
         videoElement: vid,
-        constraints: { video:true, facingMode:"environment"},
+        constraints: { video:{facingMode:"environment"}},
         callback: function(_stream) {
             var scene = document.querySelector('#scene');
             var aobj = document.createElement('a-video');
