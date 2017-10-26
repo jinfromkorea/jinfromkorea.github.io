@@ -18,8 +18,6 @@
   <a-scene id="scene">
     <a-assets>
       <video id="localStream" autoplay></video>
-      <video id="remoteStream" autoplay></video>
-
       <video id="remote1Stream" autoplay></video>
       <video id="remote2Stream" autoplay></video>
     </a-assets>
@@ -56,7 +54,21 @@ var cameraSource = (function(global) {
   return { id: id, title: title, start: start };
 })(this);
 
-var remoteSource = (function(global){
+var remote1Source = (function(global){
+  var id = 'source-remote', title='remote', videoElement=null;
+  function start(opts){
+    videoElement = opts.videoElement;
+    showRemotePreview(opts.callback, opts.stream);
+  }
+  function showRemotePreview(_callback, _stream){
+    videoElement.srcObject = _stream;
+    videoElement.play();
+    _callback(_stream);
+  }
+  return {id:id, title:title, start:start}
+})(this);
+
+var remote2Source = (function(global){
   var id = 'source-remote', title='remote', videoElement=null;
   function start(opts){
     videoElement = opts.videoElement;
@@ -83,35 +95,18 @@ var servers = {'iceServers': [{'urls': 'stun:stun.services.mozilla.com'},
                               {'urls': 'stun:stun.l.google.com:19302'}, 
                               {'urls': 'turn:numb.viagenie.ca','credential': 'yujin','username': 'yujin@email.com'}]};
 firebase.database().ref('/vr/offer/sdp').on('child_added',_createAnswer);
-var pc1 = new RTCPeerConnection(servers), pc2 = new RTCPeerConnection(servers);
+var pc1 = new RTCPeerConnection(servers);
+var pc2 = new RTCPeerConnection(servers);
 pc1.ontrack = function(e){ 
-    var vid = document.querySelector('#remote1Stream');
-    remoteSource.start({
-        videoElement:vid, 
+    var vid1 = document.querySelector('#remote1Stream');
+    remote1Source.start({
+        videoElement:vid1, 
         stream:e.streams[0], 
         callback:function(){
             var scene = document.querySelector('#scene');
             var aobj = document.createElement('a-video');
-            aobj.setAttribute('id', 'pc2');
+            aobj.setAttribute('id', 'pc1');
             aobj.setAttribute('src', '#remote1Stream' );
-            aobj.setAttribute('position', '1.6 1.5 -1.6');
-            aobj.setAttribute('rotation', '0 -30 0');
-            aobj.setAttribute('scale', '1.5 1 0.1');
-            aobj.setAttribute('playsinline', 'true');
-            scene.appendChild(aobj);
-        }
-    });
-};
-pc2.ontrack = function(e){ 
-    var vid = document.querySelector('#remote2Stream');
-    remoteSource.start({
-        videoElement:vid, 
-        stream:e.streams[0], 
-        callback:function(){
-            var scene = document.querySelector('#scene');
-            var aobj = document.createElement('a-video');
-            aobj.setAttribute('id', 'pc3');
-            aobj.setAttribute('src', '#remote2Stream' );
             aobj.setAttribute('position', '-1.6 1.5 -1.6');
             aobj.setAttribute('rotation', '0 30 0');
             aobj.setAttribute('scale', '1.5 1 0.1');
@@ -120,17 +115,36 @@ pc2.ontrack = function(e){
         }
     });
 };
+pc2.ontrack = function(e){ 
+    var vid2 = document.querySelector('#remote2Stream');
+    remote2Source.start({
+        videoElement:vid2, 
+        stream:e.streams[0], 
+        callback:function(){
+            var scene = document.querySelector('#scene');
+            var aobj = document.createElement('a-video');
+            aobj.setAttribute('id', 'pc2');
+            aobj.setAttribute('src', '#remote2Stream' );
+            aobj.setAttribute('position', '1.6 1.5 -1.6');
+            aobj.setAttribute('rotation', '0 -30 0');
+            aobj.setAttribute('scale', '1.5 1 0.1');
+            aobj.setAttribute('playsinline', 'true');
+            scene.appendChild(aobj);
+        }
+    });
+};
 function _createAnswer ( childSnapshot, prevChildKey ){
+    console.log(JSON.parse(childSnapshot.val()))
     if( JSON.parse(childSnapshot.val()).pc == 'pc1' ){
         pc1.setRemoteDescription( new RTCSessionDescription( JSON.parse(childSnapshot.val()).sdp ) 
         ).then( () => pc1.createAnswer() 
         ).then( answer => pc1.setLocalDescription( answer ) 
-        ).then( () => { var msg = firebase.database().ref('/vr/answer/sdp').push( JSON.stringify({'sdp':pc1.localDescription}) ); msg.remove(); } );
+        ).then( () => { var msg = firebase.database().ref('/vr/answer/sdp').push( JSON.stringify({'pc':'pc1','sdp':pc1.localDescription}) ); msg.remove(); } );
     }else {
         pc2.setRemoteDescription( new RTCSessionDescription( JSON.parse(childSnapshot.val()).sdp ) 
         ).then( () => pc2.createAnswer() 
         ).then( answer => pc2.setLocalDescription( answer ) 
-        ).then( () => { var msg = firebase.database().ref('/vr/answer/sdp').push( JSON.stringify({'sdp':pc2.localDescription}) ); msg.remove(); } );
+        ).then( () => { var msg = firebase.database().ref('/vr/answer/sdp').push( JSON.stringify({'pc':'pc2','sdp':pc2.localDescription}) ); msg.remove(); } );
     }
 }
   </script>
@@ -143,7 +157,7 @@ function onReady() {
         callback: function(_stream) {
             var scene = document.querySelector('#scene');
             var aobj = document.createElement('a-video');
-            aobj.setAttribute('id', 'pc1');
+            aobj.setAttribute('id', 'local');
             aobj.setAttribute('src', '#localStream' );
             aobj.setAttribute('position', '0 1.5 -2'); // 정중앙
             aobj.setAttribute('rotation', '0 0 0');
