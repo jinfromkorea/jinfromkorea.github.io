@@ -34,6 +34,7 @@ connection.onstream = function(event) {
     video.autoplay = true;
     if(event.type === 'local') { video.muted = true; }
     video.srcObject = event.stream;
+    video.id = event.streamid;
     if (event.userid) {
         var h2 = document.createElement('h2');
         h2.innerHTML = event.userid;
