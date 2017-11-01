@@ -29,6 +29,7 @@ connection.onstream = function(event) {
     var video = document.createElement('video');
     video.controls = false;
     video.playsinline = true;
+    video.autoplay = true;
     if(event.type === 'local') { video.muted = true; }
     video.srcObject = event.stream;
     if (event.userid) {
@@ -38,10 +39,11 @@ connection.onstream = function(event) {
         connection.videosContainer.appendChild(h2);
     }
     connection.videosContainer.appendChild(video);
-
+/*
     setTimeout(function() {
         video.play()
     }, 5000);
+*/    
 };
 
 connection.onstreamended = function(event) {
