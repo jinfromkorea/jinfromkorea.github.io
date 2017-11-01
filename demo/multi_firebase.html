@@ -3,8 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
   <title>YUJIN 1:1 Peer connection</title>
 </head>
 <body>
@@ -13,42 +11,76 @@
   <input type="text" id="room-id" value="abcdef" autocorrect=off autocapitalize=off size=20>
   <div id="videos-container"></div>
   <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
   <script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
+  <!--
   <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
+-->
+  <script src="https://rtcmulticonnection.herokuapp.com/dev/FirebaseConnection.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+  <script src="https://cdn.webrtc-experiment.com/firebase.js"></script>
+  <script src="https://cdn.webrtc-experiment.com/commits.js" async></script>
   <script>
 var connection = new RTCMultiConnection();
-connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+connection.setCustomSocketHandler(FirebaseConnection);
+connection.firebase = 'test-webrtc-56501'; // or rtcweb or muazkh or signaling
+//connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 connection.session = { audio: true, video: true, oneway: true };
 connection.sdpConstraints.mandatory = { OfferToReceiveAudio: false, OfferToReceiveVideo: false };
 connection.videosContainer = document.getElementById('videos-container');
 console.log(connection);
 connection.onstream = function(event) {
-    console.log("RTCMultiConnection event : onstream");
+    console.log("connection.onstream");
     console.log(event);
-    console.log(event.mediaElement);
     event.mediaElement.removeAttribute('src');
     event.mediaElement.removeAttribute('srcObject');
+    console.log(event.mediaElement);
+
     var video = document.createElement('video');
     video.controls = false;
-    video.playsinline = true;
-    video.autoplay = true;
-    if(event.type === 'local') { video.muted = true; }
+    if(event.type === 'local') {
+        video.muted = true;
+    }
     video.srcObject = event.stream;
-    video.id = event.streamid;
+
+    var mediaElementContainer = document.createElement('div');
+    mediaElementContainer.className = 'media-container';
+
+    //var mediaControls = document.createElement('div');
+    //mediaControls.className = 'media-controls';
+
+    var mediaBox = document.createElement('div');
+    mediaBox.className = 'media-box';
+
+    //mediaElementContainer.appendChild(mediaControls);
+    mediaElementContainer.appendChild(mediaBox);
     if (event.userid) {
         var h2 = document.createElement('h2');
         h2.innerHTML = event.userid;
         h2.setAttribute('style', 'position: absolute;color:white;font-size:17px;text-shadow: 1px 1px black;padding:0;margin:0;text-align: left; margin-top: 10px; margin-left: 10px; display: block; border: 0;line-height:1.5;z-index:1;');
-        connection.videosContainer.appendChild(h2);
+        mediaBox.appendChild(h2);
     }
-    connection.videosContainer.appendChild(video);
+    mediaBox.appendChild(video);
+    mediaElementContainer.media = video;
+
+    console.log(video);
+
+    var width = parseInt(connection.videosContainer.clientWidth / 2) - 20;
+    console.log(width);
+    console.log(video.nodeName);
+
+    connection.videosContainer.appendChild(mediaElementContainer);
+
     setTimeout(function() {
-        video.play()
+        mediaElementContainer.media.play();
     }, 5000);
+
+    mediaElement.id = event.streamid;
+    console.log(mediaElement);
 };
 
 connection.onstreamended = function(event) {
-    console.log("RTCMultiConnection event : onstreamended");
+    console.log("connection.onstreamended");
     console.log(event);
     var mediaElement = document.getElementById(event.streamid);
     console.log(mediaElement);
@@ -61,21 +93,15 @@ document.getElementById('open-room').onclick = _openRoom;
 document.getElementById('join-room').onclick = _joinRoom;
 document.getElementById('room-id').onkeyup = _changeRoomId;
 function _changeRoomId(event) {
-    console.log("document event : onkeyup");
-    console.log(this);
     console.log(event);
     localStorage.setItem(connection.socketMessageEvent, this.value);
 };
 function _joinRoom(event) {
-    console.log("document event : onclick");
-    console.log(this);
     console.log(event);
     connection.sdpConstraints.mandatory = { OfferToReceiveAudio: true, OfferToReceiveVideo: true };
     connection.join(document.getElementById('room-id').value);
 }
 function _openRoom(event) {
-    console.log("document event : onclick");
-    console.log(this);
     console.log(event);
     connection.open(document.getElementById('room-id').value, function() {
         console.log(connection.sessionid);
