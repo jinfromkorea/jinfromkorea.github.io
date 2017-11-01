@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+  <title>YUJIN 1:1 Peer connection</title>
+</head>
+<body>
+  <button id="open-room">Start Broadcast</button>
+  <button id="join-room">Join</button>
+  <input type="text" id="room-id" value="abcdef" autocorrect=off autocapitalize=off size=20>
+  <div id="videos-container"></div>
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
+  <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
+  <script>
+var connection = new RTCMultiConnection();
+connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+connection.session = { audio: true, video: true, oneway: true };
+connection.sdpConstraints.mandatory = { OfferToReceiveAudio: false, OfferToReceiveVideo: false };
+connection.videosContainer = document.getElementById('videos-container');
+console.log(connection);
+connection.onstream = function(event) {
+    console.log("RTCMultiConnection event : onstream");
+    console.log(event);
+    console.log(event.mediaElement);
+    event.mediaElement.removeAttribute('src');
+    event.mediaElement.removeAttribute('srcObject');
+    var video = document.createElement('video');
+    video.controls = false;
+    if(event.type === 'local') { video.muted = true; }
+    video.srcObject = event.stream;
+    if (event.userid) {
+        var h2 = document.createElement('h2');
+        h2.innerHTML = event.userid;
+        h2.setAttribute('style', 'position: absolute;color:white;font-size:17px;text-shadow: 1px 1px black;padding:0;margin:0;text-align: left; margin-top: 10px; margin-left: 10px; display: block; border: 0;line-height:1.5;z-index:1;');
+        connection.videosContainer.appendChild(h2);
+    }
+    connection.videosContainer.appendChild(video);
+
+    setTimeout(function() {
+        video.play()
+    }, 5000);
+};
+
+connection.onstreamended = function(event) {
+    console.log("RTCMultiConnection event : onstreamended");
+    console.log(event);
+    var mediaElement = document.getElementById(event.streamid);
+    console.log(mediaElement);
+    if (mediaElement) {
+        mediaElement.parentNode.removeChild(mediaElement);
+    }
+};
+
+document.getElementById('open-room').onclick = _openRoom;
+document.getElementById('join-room').onclick = _joinRoom;
+document.getElementById('room-id').onkeyup = _changeRoomId;
+function _changeRoomId(event) {
+    console.log("document event : onkeyup");
+    console.log(this);
+    console.log(event);
+    localStorage.setItem(connection.socketMessageEvent, this.value);
+};
+function _joinRoom(event) {
+    console.log("document event : onclick");
+    console.log(this);
+    console.log(event);
+    connection.sdpConstraints.mandatory = { OfferToReceiveAudio: true, OfferToReceiveVideo: true };
+    connection.join(document.getElementById('room-id').value);
+}
+function _openRoom(event) {
+    console.log("document event : onclick");
+    console.log(this);
+    console.log(event);
+    connection.open(document.getElementById('room-id').value, function() {
+        console.log(connection.sessionid);
+    });
+}
+var roomid = '';
+if (localStorage.getItem(connection.socketMessageEvent)) {
+    roomid = localStorage.getItem(connection.socketMessageEvent);
+} else {
+    roomid = connection.token();
+}
+document.getElementById('room-id').value = roomid;
+  </script>
+</body>
+</html>
