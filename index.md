@@ -4,7 +4,8 @@ layout: page
 
 Demo 모음입니다.  
 
-* [getUserMedia](https://jinfromkorea.github.io/hello-world/src/webrtc-getusermedia/ "getUserMedia")  
+* [getUserMedia](https://jinfromkorea.github.io/hello-world/src/getusermedia/ "getUserMedia")  
+
 * [PeerConnection 시스널링(offer & answer) 테스트용 Video 전송](https://jinfromkorea.github.io/hello-world/src/webrtc-peerconnection-with-firebase/ "PeerConnection with firebase")  
 * [1:1 VideoChat](https://jinfromkorea.github.io/hello-world/src/webrtc/sample3/ "video call")  
 * [1:1 VideoChat](/demo "WebRTC(video call) with firebase")  
@@ -21,3 +22,6 @@ Readme
 * [css media queries overview](http://cssmediaqueries.com/overview.html) 
   https://hyeonseok.com/soojung/contents/upload/h3-responsive-web-design.pdf  
   http://naradesign.net/wp/2012/05/30/1823/  
+
+mac 
+* https://support.apple.com/ko-kr/HT206886 : OS X El Capitan을 다운로드하는 방법  
