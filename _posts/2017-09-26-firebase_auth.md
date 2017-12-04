@@ -5,6 +5,7 @@ date: 2017-09-27
 category: firebase
 ---
 
+html 부분.. 로그인하는 부분과 로그아웃하는 부분을 만들어둠. 
 ```
 <div id="logon" class="hidden">
   <button id="signout">signout</button>
