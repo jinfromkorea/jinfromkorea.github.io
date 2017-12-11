@@ -4,18 +4,15 @@ layout: page
 
 Demo 모음입니다.  
 
-* [getUserMedia](https://jinfromkorea.github.io/hello-world/src/getusermedia/ "getUserMedia")  
+* [getUserMedia](https://jinfromkorea.github.io/hello-world/src/getusermedia/ "getUserMedia") : Web/WebVR/음성인식 형태 
 
-* [PeerConnection](https://jinfromkorea.github.io/hello-world/src/peerconnection/ "PeerConnection with firebase") : offer / answer  
+* [PeerConnection](https://jinfromkorea.github.io/hello-world/src/peerconnection/ "PeerConnection") : offer(getUserMedia) & answer(Web,WebVR) / 1:1 video chat  
 
-* [Video Chat](https://jinfromkorea.github.io/hello-world/src/peerconnection/v_chat.html "video call")  
+* [MultiConnection](https://jinfromkorea.github.io/hello-world/src/multiconnection/ "MultiConnection") : video(getUserMedia) broadcast / desctop(screenCapturing) broadcast
 
 * [Video Chat](/demo "WebRTC(video call) with firebase")  :  여러개의 1:1 video chat임.  
 firebase Auth를 통한 로그인/firebase Database를 통해 sdp공유/datachannel
 
-* [Screen Capturing 해서 Broadcast로 보냄](https://jinfromkorea.github.io/hello-world/src/multiconnection "WebVR")  
-
-VR Demo입니다.  
 * [최대 3개의 Video를 WebVR에서](https://jinfromkorea.github.io/hello-world/src/webvr-peerconnection "WebVR")  
 * [최대 2개의 Video를 Broadcast로 보내고 WebVR에서 확인](https://jinfromkorea.github.io/hello-world/src/webvr-multiconnection "WebVR")  
 * [원료야드](/demo/vr_yard.html "원료야드")

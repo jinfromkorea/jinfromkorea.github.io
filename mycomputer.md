@@ -6,8 +6,9 @@ permalink: /about/
 
 ### OS
 
-Windows 7 Enterprise K ( 64bit )  
-맥이랑 리눅스는 잘 모름. 프로그램은 윈도우용으로만 설치해서 사용함. 
+* Windows 7 Enterprise K ( 64bit ) : LG S550  
+
+* OS X El Capitan : iMac(24-inch, Early 2008)
 
 ***
 
@@ -16,10 +17,8 @@ Windows 7 Enterprise K ( 64bit )
 뭔가 설치는 했는데.. 빠진게 있을 수 있음. 
 
  * Chrome  
- 대부분 크롬 브라우저에서 테스트를 진행함. 아직까지는 별도의 확장프로그램을 설치하진 않았음. 
 
  * Java  
- 압축이 풀린 형태로 사용하고 경로는 다음과 같음. JAVA_HOME을 매번 지정해서 사용함. 
 
 > C:\Android\jdk1.8.0_144
 
@@ -29,7 +28,7 @@ Windows 7 Enterprise K ( 64bit )
 
 > C:\Android\apache-tomcat-8.5.16
 
- * Sublime Text 3
+ * Visual Studio Code
 
  * Git
 
