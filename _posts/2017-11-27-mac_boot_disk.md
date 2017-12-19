@@ -2,7 +2,7 @@
 layout: post
 title: "mac - iMac2008"
 date: 2017-11-27
-category: mac
+category: os
 ---
 
 iMac 2008 Eealy 가 생겼는데..  부팅디스크가 없다. CentOS 만 깔려있을 줄이라.. 
