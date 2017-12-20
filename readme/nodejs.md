@@ -69,4 +69,6 @@ npm 도 최신버전으로 설치하려고 해봐도 되지 않는다.
 npm install npm@latest -g
 ```
 
-참고 : https://joshtronic.com/2017/10/20/upgrade-to-nodejs-8-on-ubuntu-1710/
+참고  
+https://joshtronic.com/2017/10/20/upgrade-to-nodejs-8-on-ubuntu-1710/  
+https://joshtronic.com/2017/12/11/upgrade-to-nodejs-8-on-debian-and-ubuntu/
