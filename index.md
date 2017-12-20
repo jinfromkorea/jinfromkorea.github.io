@@ -19,8 +19,11 @@ firebase Auth를 통한 로그인/firebase Database를 통해 sdp공유/datachan
 
 Readme  
 * [webrtc](/readme/webrtc.html)
+* [nodejs 설치](/readme/nodejs.html)
+* [ruby 설치](/readme/ruby.html)
+* [firebase](/readme/firebase.html)
 * http://blog.saltfactory.net/using-css-media-query-for-responsive-web/
-* [css media queries overview](http://cssmediaqueries.com/overview.html) 
+* [css media queries overview](http://cssmediaqueries.com/overview.html)  
   https://hyeonseok.com/soojung/contents/upload/h3-responsive-web-design.pdf  
   http://naradesign.net/wp/2012/05/30/1823/  
 
