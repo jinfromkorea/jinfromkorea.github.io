@@ -12,6 +12,8 @@ cd jinfromkorea.github.io
 bundle exec jekyll serve 
 ```
 
+# certificate verify failed 오류
+
 [https://jekyllrb.com/docs/quickstart/](https://jekyllrb.com/docs/quickstart/) 참고해서 jekyll과 bundler를 설치하려고 했더니 
 ERROR 가..
 
@@ -23,6 +25,7 @@ ERROR:  Could not find a valid gem 'bundler' (>= 0), here is why:
           Unable to download data from https://rubygems.org/ - SSL_connect returned=1 errno=0 state=error: certificate verify failed (https://api.rubygems.org/specs.4.8.gz)
 jinia@jin:~$
 ```
+# 인증서 추가
 
 구글링과 몇가지 시도를 통해.. 겨우 해결했다.  
 브라우저에 인증서를 등록하려고 사용했던 인증서 파일을 이용하면 되는데.. 파일확장자(*.crt)는 수정이 필요한가 보다.  
@@ -71,6 +74,8 @@ Done installing documentation for bundler after 4 seconds
 21 gems installed
 jinia@jin:~$ 
 ```
+
+#  conflict
 
 ```bundle exec jekyll serve```으로 GitHub Page 사이트를 띄울랬더니 충돌이 생겼나 보다. 
 
