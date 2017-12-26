@@ -19,8 +19,8 @@ firebase Auth를 통한 로그인/firebase Database를 통해 sdp공유/datachan
 
 Readme  
 * [webrtc](/readme/webrtc.html)
-* [nodejs 설치](/readme/nodejs.html)
-* [ruby 설치](/readme/ruby.html)
+* [nodejs 설치](/readme/nodejs.html#nodejs)/[npm 포함](/readme/nodejs.html#npm)
+* [ruby 설치](/readme/ruby.html#ruby)/[gem 포함](/readme/ruby.html)
 * [firebase](/readme/firebase.html)
 * http://blog.saltfactory.net/using-css-media-query-for-responsive-web/
 * [css media queries overview](http://cssmediaqueries.com/overview.html)  

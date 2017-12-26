@@ -107,3 +107,75 @@ jinia@jin:~$
 참고  
 https://joshtronic.com/2017/10/20/upgrade-to-nodejs-8-on-ubuntu-1710/  
 https://joshtronic.com/2017/12/11/upgrade-to-nodejs-8-on-debian-and-ubuntu/
+
+
+# npm
+
+npm *command*
+
+*command* 에는 install, ls 등이 있구먼. 
+
+```
+jinia@jin:~/Documents/GitHub/hello-world/src/react/my-app$ npm -h
+
+Usage: npm <command>
+
+where <command> is one of:
+    access, adduser, bin, bugs, c, cache, completion, config,
+    ddp, dedupe, deprecate, dist-tag, docs, doctor, edit,
+    explore, get, help, help-search, i, init, install,
+    install-test, it, link, list, ln, login, logout, ls,
+    outdated, owner, pack, ping, prefix, profile, prune,
+    publish, rb, rebuild, repo, restart, root, run, run-script,
+    s, se, search, set, shrinkwrap, star, stars, start, stop, t,
+    team, test, token, tst, un, uninstall, unpublish, unstar,
+    up, update, v, version, view, whoami
+
+npm <command> -h     quick help on <command>
+npm -l           display full usage info
+npm help <term>  search for help on <term>
+npm help npm     involved overview
+
+Specify configs in the ini-formatted file:
+    /home/jinia/.npmrc
+or on the command line via: npm <command> --key value
+Config info can be viewed via: npm help config
+
+npm@5.6.0 /usr/local/lib/node_modules/npm
+jinia@jin:~/Documents/GitHub/hello-world/src/react/my-app$ 
+```
+
+npm install -g *package_name*
+
+-g 존재 유무에 따라  globally하게 설치할지 locally하게 설치할지 정해지는구먼. 
+
+## create-react-app
+
+```
+jinia@jin:~$ sudo npm install -g create-react-app
+/usr/local/bin/create-react-app -> /usr/local/lib/node_modules/create-react-app/index.js
++ create-react-app@1.4.3
+added 106 packages in 6.274s
+jinia@jin:~$ 
+```
+
+## gulp-cli
+
+```
+jinia@jin:~$ sudo npm install -g gulp-cli
+/usr/local/bin/gulp -> /usr/local/lib/node_modules/gulp-cli/bin/gulp.js
++ gulp-cli@2.0.0
+added 217 packages in 13.066s
+jinia@jin:~$ 
+```
+
+## http-server
+
+```
+jinia@jin:~$ sudo npm install -g http-server
+/usr/local/bin/http-server -> /usr/local/lib/node_modules/http-server/bin/http-server
+/usr/local/bin/hs -> /usr/local/lib/node_modules/http-server/bin/http-server
++ http-server@0.10.0
+added 23 packages in 3.208s
+jinia@jin:~$ 
+```

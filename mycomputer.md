@@ -4,15 +4,18 @@ title: 내컴
 permalink: /about/
 ---
 
-### OS
+# OS
 
-* Windows 7 Enterprise K ( 64bit ) : LG S550  
+* ~~Windows 7 Enterprise K ( 64bit ) : LG S550~~  
+
+* Windows 7 Enterprise K (32 bit) : VDI
 
 * OS X El Capitan : iMac(24-inch, Early 2008)
 
-***
+* Ubuntu 17.10 : LG 15UB470
 
-### 프로그램 
+
+# 프로그램 
 
 뭔가 설치는 했는데.. 빠진게 있을 수 있음. 
 
