@@ -179,3 +179,24 @@ jinia@jin:~$ sudo npm install -g http-server
 added 23 packages in 3.208s
 jinia@jin:~$ 
 ```
+
+## electron
+
+```
+jinia@jin:~/Documents/GitHub/hello-world/src/electron$ npm install electron
+
+> electron@1.7.10 postinstall /home/jinia/Documents/GitHub/hello-world/src/electron/node_modules/electron
+> node install.js
+
+npm WARN saveError ENOENT: no such file or directory, open '/home/jinia/Documents/GitHub/hello-world/src/electron/package.json'
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN enoent ENOENT: no such file or directory, open '/home/jinia/Documents/GitHub/hello-world/src/electron/package.json'
+npm WARN electron No description
+npm WARN electron No repository field.
+npm WARN electron No README data
+npm WARN electron No license field.
+
++ electron@1.7.10
+added 152 packages in 63.914s
+jinia@jin:~/Documents/GitHub/hello-world/src/electron$
+```
