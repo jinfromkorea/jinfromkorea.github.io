@@ -108,6 +108,109 @@ jinia@jin:~$
 https://joshtronic.com/2017/10/20/upgrade-to-nodejs-8-on-ubuntu-1710/  
 https://joshtronic.com/2017/12/11/upgrade-to-nodejs-8-on-debian-and-ubuntu/
 
+며칠후에 해보니. 최신버전 받아진다. 
+```
+jinia@jin:~$ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+
+## Installing the NodeSource Node.js v8.x repo...
+
+
+## Populating apt-get cache...
+
++ apt-get update
+Hit:1 http://kr.archive.ubuntu.com/ubuntu artful InRelease
+Get:2 http://kr.archive.ubuntu.com/ubuntu artful-updates InRelease [78.6 kB]                                                                 
+Get:3 http://kr.archive.ubuntu.com/ubuntu artful-backports InRelease [72.2 kB]                                                                          
+Ign:4 http://dl.google.com/linux/chrome/deb stable InRelease                                                                                    
+Get:5 http://kr.archive.ubuntu.com/ubuntu artful-updates/main amd64 Packages [137 kB]          
+Get:6 http://dl.google.com/linux/chrome/deb stable Release [1,189 B]                                             
+Get:7 http://kr.archive.ubuntu.com/ubuntu artful-updates/main i386 Packages [135 kB]                                  
+Hit:8 http://packages.microsoft.com/repos/vscode stable InRelease                                       
+Get:10 http://kr.archive.ubuntu.com/ubuntu artful-updates/main amd64 DEP-11 Metadata [56.6 kB]          
+Get:11 http://kr.archive.ubuntu.com/ubuntu artful-updates/main DEP-11 64x64 Icons [35.2 kB]                        
+Get:12 http://kr.archive.ubuntu.com/ubuntu artful-updates/universe amd64 Packages [48.7 kB]
+Get:13 http://kr.archive.ubuntu.com/ubuntu artful-updates/universe i386 Packages [48.3 kB]
+Get:14 http://kr.archive.ubuntu.com/ubuntu artful-updates/universe amd64 DEP-11 Metadata [48.2 kB]
+Get:15 http://kr.archive.ubuntu.com/ubuntu artful-updates/universe DEP-11 64x64 Icons [48.4 kB]
+Get:16 http://kr.archive.ubuntu.com/ubuntu artful-backports/main i386 Packages [1,504 B]                  
+Get:17 http://kr.archive.ubuntu.com/ubuntu artful-backports/main amd64 Packages [1,508 B]
+Get:18 http://kr.archive.ubuntu.com/ubuntu artful-backports/universe amd64 DEP-11 Metadata [4,708 B]
+Get:19 http://security.ubuntu.com/ubuntu artful-security InRelease [78.6 kB]
+Get:20 http://security.ubuntu.com/ubuntu artful-security/main amd64 DEP-11 Metadata [204 B]
+Get:21 http://security.ubuntu.com/ubuntu artful-security/universe amd64 DEP-11 Metadata [10.2 kB]
+Fetched 806 kB in 2s (346 kB/s)               
+Reading package lists... Done
+
+## Confirming "artful" is supported...
+
++ curl -sLf -o /dev/null 'https://deb.nodesource.com/node_8.x/dists/artful/Release'
+
+## Adding the NodeSource signing key to your keyring...
+
++ curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+OK
+
+## Creating apt sources list file for the NodeSource Node.js v8.x repo...
+
++ echo 'deb https://deb.nodesource.com/node_8.x artful main' > /etc/apt/sources.list.d/nodesource.list
++ echo 'deb-src https://deb.nodesource.com/node_8.x artful main' >> /etc/apt/sources.list.d/nodesource.list
+
+## Running `apt-get update` for you...
+
++ apt-get update
+Hit:1 http://kr.archive.ubuntu.com/ubuntu artful InRelease
+Hit:2 http://kr.archive.ubuntu.com/ubuntu artful-updates InRelease                                                                                               
+Hit:3 http://packages.microsoft.com/repos/vscode stable InRelease                                                                                                
+Hit:4 http://kr.archive.ubuntu.com/ubuntu artful-backports InRelease                                                
+Ign:5 http://dl.google.com/linux/chrome/deb stable InRelease                                                        
+Get:6 http://dl.google.com/linux/chrome/deb stable Release [1,189 B]                           
+Get:7 https://deb.nodesource.com/node_8.x artful InRelease [4,622 B]                                      
+Hit:8 http://security.ubuntu.com/ubuntu artful-security InRelease               
+Get:10 https://deb.nodesource.com/node_8.x artful/main i386 Packages [765 B]
+Get:11 https://deb.nodesource.com/node_8.x artful/main amd64 Packages [766 B]
+Fetched 7,342 B in 1s (6,750 B/s)  
+Reading package lists... Done
+
+## Run `apt-get install nodejs` (as root) to install Node.js v8.x and npm
+
+jinia@jin:~$ sudo apt-get install -y nodejs
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  gyp libc-ares2 libjavascriptcoregtk-1.0-0 libjs-inherits libjs-node-uuid libjs-underscore libssl-dev libssl-doc libssl1.0-dev libuv1 libuv1-dev
+  libwebkitgtk-1.0-0 node-abbrev node-ansi node-ansi-color-table node-archy node-async node-balanced-match node-block-stream node-brace-expansion
+  node-builtin-modules node-combined-stream node-concat-map node-cookie-jar node-delayed-stream node-forever-agent node-form-data node-fs.realpath node-fstream
+  node-fstream-ignore node-github-url-from-git node-glob node-graceful-fs node-gyp node-hosted-git-info node-inflight node-inherits node-ini
+  node-is-builtin-module node-isexe node-json-stringify-safe node-lockfile node-lru-cache node-mime node-minimatch node-mkdirp node-mute-stream node-node-uuid
+  node-nopt node-normalize-package-data node-npmlog node-once node-osenv node-path-is-absolute node-pseudomap node-qs node-read node-read-package-json
+  node-request node-retry node-rimraf node-semver node-sha node-slide node-spdx-correct node-spdx-expression-parse node-spdx-license-ids node-tar
+  node-tunnel-agent node-underscore node-validate-npm-package-license node-which node-wrappy node-yallist nodejs-doc zlib1g-dev
+Use 'sudo apt autoremove' to remove them.
+The following packages will be REMOVED:
+  nodejs-dev npm
+The following packages will be upgraded:
+  nodejs
+1 upgraded, 0 newly installed, 2 to remove and 9 not upgraded.
+Need to get 12.6 MB of archives.
+After this operation, 33.6 MB of additional disk space will be used.
+Get:1 https://deb.nodesource.com/node_8.x artful/main amd64 nodejs amd64 8.9.3-1nodesource1 [12.6 MB]
+Fetched 12.6 MB in 2s (4,709 kB/s) 
+(Reading database ... 195797 files and directories currently installed.)
+Removing npm (3.5.2-0ubuntu4) ...
+dpkg: nodejs-dev: dependency problems, but removing anyway as you requested:
+ node-gyp depends on nodejs-dev.
+
+Removing nodejs-dev (6.11.4~dfsg-1ubuntu1) ...
+(Reading database ... 192731 files and directories currently installed.)
+Preparing to unpack .../nodejs_8.9.3-1nodesource1_amd64.deb ...
+Unpacking nodejs (8.9.3-1nodesource1) over (6.11.4~dfsg-1ubuntu1) ...
+Setting up nodejs (8.9.3-1nodesource1) ...
+Processing triggers for man-db (2.7.6.1-2) ...
+jinia@jin:~$ node -v
+v8.9.3
+jinia@jin:~$ 
+```
 
 # npm
 
@@ -183,20 +286,15 @@ jinia@jin:~$
 ## electron
 
 ```
-jinia@jin:~/Documents/GitHub/hello-world/src/electron$ npm install electron
+jinia@jin:~$ date
+Thu Dec 28 16:12:13 KST 2017
+jinia@jin:~/Documents/GitHub/first$ sudo npm install electron -g --unsafe-perm=true
+/usr/local/bin/electron -> /usr/local/lib/node_modules/electron/cli.js
 
-> electron@1.7.10 postinstall /home/jinia/Documents/GitHub/hello-world/src/electron/node_modules/electron
+> electron@1.7.10 postinstall /usr/local/lib/node_modules/electron
 > node install.js
 
-npm WARN saveError ENOENT: no such file or directory, open '/home/jinia/Documents/GitHub/hello-world/src/electron/package.json'
-npm notice created a lockfile as package-lock.json. You should commit this file.
-npm WARN enoent ENOENT: no such file or directory, open '/home/jinia/Documents/GitHub/hello-world/src/electron/package.json'
-npm WARN electron No description
-npm WARN electron No repository field.
-npm WARN electron No README data
-npm WARN electron No license field.
-
 + electron@1.7.10
-added 152 packages in 63.914s
-jinia@jin:~/Documents/GitHub/hello-world/src/electron$
+added 152 packages in 11.22s
+jinia@jin:~/Documents/GitHub/first$ 
 ```
