@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "startup app 등록하기"
-date: 2017-12-27
+date: 2018-01-02
 category: os
 ---
 
