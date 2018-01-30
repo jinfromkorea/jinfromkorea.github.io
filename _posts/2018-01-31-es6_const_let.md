@@ -1,4 +1,9 @@
-
+---
+layout: post
+title: "const let, arrow function"
+date: 2018-01-31
+category: javascript
+---
 
 이전에는 
 ```
