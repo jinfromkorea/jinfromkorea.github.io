@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "javascript - immediate function"
+title: "IIFE (Immediately Invoked Function Expression)"
 date: 2017-11-15
 category: javascript
 ---
