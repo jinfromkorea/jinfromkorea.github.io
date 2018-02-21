@@ -298,3 +298,53 @@ jinia@jin:~/Documents/GitHub/first$ sudo npm install electron -g --unsafe-perm=t
 added 152 packages in 11.22s
 jinia@jin:~/Documents/GitHub/first$ 
 ```
+
+## asar
+
+```
+jinia@jin:~$ sudo npm install -g asar
+[sudo] password for jinia: 
+/usr/local/bin/asar -> /usr/local/lib/node_modules/asar/bin/asar.js
++ asar@0.14.0
+added 92 packages in 5.423s
+jinia@jin:~$ 
+```
+
+## electron-is-dev
+
+```
+jinia@jin:~$ sudo npm install electron-is-dev -g
+[sudo] password for jinia: 
++ electron-is-dev@0.3.0
+added 1 package in 0.243s
+jinia@jin:~$ 
+```
+
+## node-gyp
+
+```
+jinia@jin:~$ sudo npm install -g node-gyp
+[sudo] password for jinia: 
+/usr/local/bin/node-gyp -> /usr/local/lib/node_modules/node-gyp/bin/node-gyp.js
++ node-gyp@3.6.2
+added 101 packages in 4.169s
+jinia@jin:~$ 
+```
+
+## webpack
+
+```
+jinia@jin:~$ sudo npm install webpack -g
+[sudo] password for jinia: 
+/usr/local/bin/webpack -> /usr/local/lib/node_modules/webpack/bin/webpack.js
+
+> uglifyjs-webpack-plugin@0.4.6 postinstall /usr/local/lib/node_modules/webpack/node_modules/uglifyjs-webpack-plugin
+> node lib/post_install.js
+
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.1.3 (node_modules/webpack/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.3: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
++ webpack@3.10.0
+added 251 packages in 11.157s
+jinia@jin:~$ 
+```
