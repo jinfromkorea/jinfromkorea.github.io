@@ -1,5 +1,5 @@
 ---
 layout: home
-title: note
+title: post
 permalink: /posts/
 ---

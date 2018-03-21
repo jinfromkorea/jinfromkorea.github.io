@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 내컴
+title: my computers
 permalink: /about/
 ---
 

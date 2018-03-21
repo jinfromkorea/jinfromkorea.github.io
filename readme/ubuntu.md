@@ -1,18 +1,20 @@
 ---
 layout: page
+title: ubuntu
 ---
-ubuntu 사용하면서 알게된것들 
+
+# ubuntu
 
 [fstab remount](./ubuntu.html#fstab)  
 [network 확인](./ubuntu.html#network)  
 [fileserver 확인](./ubuntu.html#fileserver)  
 [booting 디스크 만들기](./ubuntu.html#booting-disk)  
 
-# fstab
+## fstab
 
 `/etc/fstab` 파일의 내용은 다음과 같다. options 값이 바뀌었음. 
 
-```
+```bash
 jinia@jin:~$ sudo cat /etc/fstab
 [sudo] password for jinia: 
 # /etc/fstab: static file system information.
@@ -33,7 +35,7 @@ UUID=08502cb2-b326-42fe-90ba-923e45913273 none            swap    sw            
 ```
 
 
-# network
+## network
 
 회사에서 ping이 나가는지만 체크하면 될듯. 
 ```
@@ -44,7 +46,7 @@ ping www.solutionpot.co.kr
 `/etc/netplan/01-netcfg.yaml` 파일에 네트워크 설정 정보는 들어가 있음.  
 nameservers의 addresses는 xxx.xxx.xxx.xxx 로 되어있으니, 적당히 본인이 사용하는 DNS ip를 적길.. 
 
-```
+```bash
 jinia@jin:~$ cat /etc/netplan/01-netcfg.yaml 
 # This file describes the network interfaces available on your system
 # For more information, see netplan(5).
@@ -60,7 +62,7 @@ network:
 jinia@jin:~$ 
 ```
 
-# fileserver
+## fileserver
 
 윈도우에서는 탐색기에서 네트워크 드라이브로 다음과 같이 연결해서 사용했는데. ubuntu는 없는지라.. 
 
@@ -76,7 +78,7 @@ cd /media/data/swdev
 
 
 
-# booting disk
+## booting disk
 
 USB 부팅디스크 만들기는 [http://sergeswin.com/1178](http://sergeswin.com/1178) 참고해서 만들었음. 
 
@@ -88,7 +90,7 @@ sudo dd if=./ubuntu-16.04.3-desktop-amd64.iso of=/dev/mmcblk0p1
 usb 경로를 알아내는 거는 `fdisk -l`을 이용하면 됨.  
 `wget` 으로 iso파일 다운로드 받아도 됨. 
 
-```
+```bash
 jinia@jin:~$ cd Downloads
 jinia@jin:~/Downloads$ wget http://ftp.riken.jp/Linux/ubuntu-releases/16.04.3/ubuntu-16.04.3-desktop-i386.iso
 --2017-12-22 09:24:23--  http://ftp.riken.jp/Linux/ubuntu-releases/16.04.3/ubuntu-16.04.3-desktop-i386.iso

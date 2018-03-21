@@ -22,10 +22,12 @@ Readme
 * [nodejs 설치](/readme/nodejs.html#nodejs)/[npm 포함](/readme/nodejs.html#npm)
 * [ruby 설치](/readme/ruby.html#ruby)/[gem 포함](/readme/ruby.html)
 * [firebase](/readme/firebase.html)
+* [ubuntu](/readme/ubuntu.html)
 * http://blog.saltfactory.net/using-css-media-query-for-responsive-web/
 * [css media queries overview](http://cssmediaqueries.com/overview.html)  
   https://hyeonseok.com/soojung/contents/upload/h3-responsive-web-design.pdf  
   http://naradesign.net/wp/2012/05/30/1823/  
+* [android](/readme/electec_launcher.html)
 
 mac 
 * https://support.apple.com/ko-kr/HT206886 : OS X El Capitan을 다운로드하는 방법  
