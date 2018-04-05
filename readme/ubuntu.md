@@ -5,7 +5,7 @@ title: ubuntu
 
 # ubuntu
 
-[fstab remount](./ubuntu.html#fstab)  
+[fstab remount](./ubuntu.html#fstab)
 [network 확인](./ubuntu.html#network)  
 [fileserver 확인](./ubuntu.html#fileserver)  
 [booting 디스크 만들기](./ubuntu.html#booting-disk)  
@@ -142,4 +142,57 @@ jinia@jin:~/Downloads$ sudo dd if=./ubuntu-16.04.3-desktop-i386.iso of=/dev/mmcb
 3139584+0 records out
 1607467008 bytes (1.6 GB, 1.5 GiB) copied, 1824.78 s, 881 kB/s
 jinia@jin:~/Downloads$ 
+```
+
+
+
+```bash
+jinia@jin:~$ sudo fdisk -l
+Disk /dev/loop0: 81.6 MiB, 85549056 bytes, 167088 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop1: 81.7 MiB, 85692416 bytes, 167368 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop3: 82 MiB, 86011904 bytes, 167992 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/sda: 238.5 GiB, 256060514304 bytes, 500118192 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xc76b7166
+
+Device     Boot    Start       End   Sectors   Size Id Type
+/dev/sda1  *        2048  58593279  58591232    28G 83 Linux
+/dev/sda2       58595326 500117503 441522178 210.5G  5 Extended
+/dev/sda5       58595328  59592703    997376   487M 83 Linux
+/dev/sda6       59594752  75216895  15622144   7.5G 82 Linux swap / Solaris
+/dev/sda7       75218944 500117503 424898560 202.6G 83 Linux
+
+
+Disk /dev/sdb: 3.8 GiB, 4009754624 bytes, 7831552 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xc3072e18
+
+Device     Boot Start     End Sectors  Size Id Type
+/dev/sdb1  *       48 7831551 7831504  3.8G  c W95 FAT32 (LBA)
+jinia@jin:~$ sudo dd if=./Downloads/ubuntu-16.04.3-desktop-i386.iso of=/dev/sdb
+3139584+0 records in
+3139584+0 records out
+1607467008 bytes (1.6 GB, 1.5 GiB) copied, 570.738 s, 2.8 MB/s
+jinia@jin:~$ 
 ```

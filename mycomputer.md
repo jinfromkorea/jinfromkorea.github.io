@@ -1,26 +1,42 @@
----
+`---
 layout: page
 title: my computers
 permalink: /about/
 ---
 
-# OS
+* [Windows 7 Enterprise K (32 bit) : VDI](#window)
+* [OS X El Capitan : iMac(24-inch, Early 2008)](#mac)
+* [Ubuntu 17.10 : LG 15UB470](#linux)
 
-* ~~Windows 7 Enterprise K ( 64bit ) : LG S550~~  
+## linux
 
-* Windows 7 Enterprise K (32 bit) : VDI
+```bash
+cd ~;~/Desktop/android-studio/bin/studio.sh &
+cd ~;~/Desktop/eclipse/eclipse &
+cd ~/Desktop/apache-tomcat-7.0.85/bin/;~/Desktop/apache-tomcat-7.0.85/bin/startup.sh
+cd ~/Documents/GitHub/jinfromkorea.github.io/;bundle exec jekyll serve
+```
 
-* OS X El Capitan : iMac(24-inch, Early 2008)
+## window
 
-* Ubuntu 17.10 : LG 15UB470
+## mac
 
 
-# 프로그램 
 
-뭔가 설치는 했는데.. 빠진게 있을 수 있음. 
+[Chrome](./mycomputer.html#chrome)  
+[java](./mycomputer.html#java)  
 
- * Chrome  
+[프로그램 실행](./mycomputer.html#run)
 
+
+
+## [chrome]
+
+특이사항 없음.
+
+## [java]
+
+>
  * Java  
 
 > C:\Android\jdk1.8.0_144
