@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "마이크로서비스"
-date: 2018-03-12
+date: 2018-04-03
 category: java
 ---
 
@@ -10,6 +10,7 @@ category: java
 
 [대용량 웹서비스를 위한 마이크로 서비스 아키텍쳐의 이해](http://bcho.tistory.com/948)
 
+[11번가 Spring Cloud 기반 Micro Services 로 전환 개발 사례](https://www.youtube.com/watch?v=sfOHAQNP8jo)
 
 ```
 로깅 - DB
