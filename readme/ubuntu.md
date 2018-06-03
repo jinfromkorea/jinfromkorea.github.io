@@ -9,6 +9,8 @@ title: ubuntu
 [network 확인](./ubuntu.html#network)  
 [fileserver 확인](./ubuntu.html#fileserver)  
 [booting 디스크 만들기](./ubuntu.html#booting-disk)  
+[fdisk](./ubuntu.html#fdisk)  
+
 
 ## fstab
 
@@ -80,87 +82,26 @@ cd /media/data/swdev
 
 ## booting disk
 
-USB 부팅디스크 만들기는 [http://sergeswin.com/1178](http://sergeswin.com/1178) 참고해서 만들었음. 
+Startup Disk Creator 
 
-```
-cd ~/Downloads
-sudo dd if=./ubuntu-16.04.3-desktop-amd64.iso of=/dev/mmcblk0p1
-```
+iso 파일만 있다면
+ubuntu에서 만들꺼라면
+tutorial 따라 만들면 된다.
 
-usb 경로를 알아내는 거는 `fdisk -l`을 이용하면 됨.  
-`wget` 으로 iso파일 다운로드 받아도 됨. 
-
-```bash
-jinia@jin:~$ cd Downloads
-jinia@jin:~/Downloads$ wget http://ftp.riken.jp/Linux/ubuntu-releases/16.04.3/ubuntu-16.04.3-desktop-i386.iso
---2017-12-22 09:24:23--  http://ftp.riken.jp/Linux/ubuntu-releases/16.04.3/ubuntu-16.04.3-desktop-i386.iso
-Resolving ftp.riken.jp (ftp.riken.jp)... 134.160.38.1
-Connecting to ftp.riken.jp (ftp.riken.jp)|134.160.38.1|:80... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 1607467008 (1.5G) [application/x-iso]
-Saving to: ‘ubuntu-16.04.3-desktop-i386.iso’
-
-ubuntu-16.04.3-desktop-i 100%[=================================>]   1.50G  1.07MB/s    in 25m 34s 
-
-2017-12-22 09:49:58 (1023 KB/s) - ‘ubuntu-16.04.3-desktop-i386.iso’ saved [1607467008/1607467008]
-
-jinia@jin:~/Downloads$ ls -al
-total 3252744
-drwxr-xr-x  2 jinia jinia       4096 Dec 22 09:26 .
-drwxr-xr-x 26 jinia jinia       4096 Dec 22 09:06 ..
--rw-rw-r--  1 jinia jinia 1587609600 Dec 21 14:05 ubuntu-16.04.3-desktop-amd64.iso
--rw-r--r--  1 jinia jinia 1607467008 Aug  1 20:52 ubuntu-16.04.3-desktop-i386.iso
-jinia@jin:~/Downloads$ sudo fdisk -l
-[sudo] password for jinia: 
-Disk /dev/sda: 238.5 GiB, 256060514304 bytes, 500118192 sectors
-Units: sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disklabel type: dos
-Disk identifier: 0xc76b7166
-
-Device     Boot    Start       End   Sectors   Size Id Type
-/dev/sda1  *        2048  58593279  58591232    28G 83 Linux
-/dev/sda2       58595326 500117503 441522178 210.5G  5 Extended
-/dev/sda5       58595328  59592703    997376   487M 83 Linux
-/dev/sda6       59594752  75216895  15622144   7.5G 82 Linux swap / Solaris
-/dev/sda7       75218944 500117503 424898560 202.6G 83 Linux
+https://tutorials.ubuntu.com/tutorial/tutorial-create-a-usb-stick-on-ubuntu#0
 
 
-Disk /dev/mmcblk0: 3.7 GiB, 3965190144 bytes, 7744512 sectors
-Units: sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disklabel type: dos
-Disk identifier: 0x00000000
-
-Device         Boot Start     End Sectors  Size Id Type
-/dev/mmcblk0p1       8192 7744511 7736320  3.7G  b W95 FAT32
-jinia@jin:~/Downloads$ sudo dd if=./ubuntu-16.04.3-desktop-i386.iso of=/dev/mmcblk0p1
-[sudo] password for jinia: 
-3139584+0 records in
-3139584+0 records out
-1607467008 bytes (1.6 GB, 1.5 GiB) copied, 1824.78 s, 881 kB/s
-jinia@jin:~/Downloads$ 
-```
-
-
+## fdisk
 
 ```bash
 jinia@jin:~$ sudo fdisk -l
-Disk /dev/loop0: 81.6 MiB, 85549056 bytes, 167088 sectors
+Disk /dev/loop0: 86.6 MiB, 90759168 bytes, 177264 sectors
 Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 
 
-Disk /dev/loop1: 81.7 MiB, 85692416 bytes, 167368 sectors
-Units: sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-
-
-Disk /dev/loop3: 82 MiB, 86011904 bytes, 167992 sectors
+Disk /dev/loop1: 86.6 MiB, 90812416 bytes, 177368 sectors
 Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
@@ -170,15 +111,39 @@ Disk /dev/sda: 238.5 GiB, 256060514304 bytes, 500118192 sectors
 Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disklabel type: dos
-Disk identifier: 0xc76b7166
+Disklabel type: gpt
+Disk identifier: B33E3F59-5341-488A-8E58-1952A899BBB7
 
-Device     Boot    Start       End   Sectors   Size Id Type
-/dev/sda1  *        2048  58593279  58591232    28G 83 Linux
-/dev/sda2       58595326 500117503 441522178 210.5G  5 Extended
-/dev/sda5       58595328  59592703    997376   487M 83 Linux
-/dev/sda6       59594752  75216895  15622144   7.5G 82 Linux swap / Solaris
-/dev/sda7       75218944 500117503 424898560 202.6G 83 Linux
+Device       Start       End   Sectors  Size Type
+/dev/sda1     2048   1050623   1048576  512M EFI System
+/dev/sda2  1050624 500115455 499064832  238G Linux filesystem
+jinia@jin:~$ 
+```
+
+```bash
+jinia@jin:~$ sudo fdisk -l
+Disk /dev/loop0: 86.6 MiB, 90759168 bytes, 177264 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop1: 86.6 MiB, 90812416 bytes, 177368 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/sda: 238.5 GiB, 256060514304 bytes, 500118192 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: B33E3F59-5341-488A-8E58-1952A899BBB7
+
+Device       Start       End   Sectors  Size Type
+/dev/sda1     2048   1050623   1048576  512M EFI System
+/dev/sda2  1050624 500115455 499064832  238G Linux filesystem
 
 
 Disk /dev/sdb: 3.8 GiB, 4009754624 bytes, 7831552 sectors
@@ -186,13 +151,10 @@ Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 Disklabel type: dos
-Disk identifier: 0xc3072e18
+Disk identifier: 0x1c0522c6
 
-Device     Boot Start     End Sectors  Size Id Type
-/dev/sdb1  *       48 7831551 7831504  3.8G  c W95 FAT32 (LBA)
-jinia@jin:~$ sudo dd if=./Downloads/ubuntu-16.04.3-desktop-i386.iso of=/dev/sdb
-3139584+0 records in
-3139584+0 records out
-1607467008 bytes (1.6 GB, 1.5 GiB) copied, 570.738 s, 2.8 MB/s
+Device     Boot   Start     End Sectors  Size Id Type
+/dev/sdb1  *          0 1650687 1650688  806M  0 Empty
+/dev/sdb2       1575508 1580179    4672  2.3M ef EFI (FAT-12/16/32)
 jinia@jin:~$ 
 ```

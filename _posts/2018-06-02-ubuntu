@@ -1,0 +1,202 @@
+---
+layout: post
+title: "ubuntu"
+date: 2018-06-02
+category: os
+---
+
+작년에 ubuntu server 17.10을 설치했었는데...  
+citrix receiver가 안되서리..  
+ubuntu를 다시 설치했다.  
+이번엔 18.04 LTS 버전으로 설치했다.
+
+## Create a bootable USB stick on Ubuntu
+
+>[https://tutorials.ubuntu.com/tutorial/tutorial-install-ubuntu-server](https://tutorials.ubuntu.com/tutorial/tutorial-install-ubuntu-server)
+
+내 USB는 4GB짜리인데.. 다행히 2GB 공간만 있으면 되다니. 충분하고.  
+Startup Disk Creator 라는 프로그램만 있으면 되는데 없대서 설치했고.  
+튜토리얼 따라하니, 별 무리 없이 만들어졌다. 
+
+## Install Ubuntu Server
+
+>[https://tutorials.ubuntu.com/tutorial/tutorial-install-ubuntu-server](https://tutorials.ubuntu.com/tutorial/tutorial-install-ubuntu-server)
+
+일단 USB로 부팅
+
+'Language' 는 English 로  
+'Keyboard' 도 English 로  
+'Install Ubuntu' 로 선택하고  
+'Network' 설정하고, 집이나 보니 DHCP로 알아서 잡힌다.  
+'Storage' 는 파티션에 자신 없으니.. 'Use An Entire Disk'로 선택했고  
+'Profile'은 예전처럼 jin, jinia로 하고  
+    
+    - hostname : jin  
+    - user : jinia 
+
+```bash
+Ubuntu 18.04 LTS jin tty1
+jin login: jinia
+Password:
+Welcome to Ubuntu 18.04 LTS (GNU/Linux 4.15.0-22-generic x86_64)
+
+ * Documentation: https://help.ubuntu.com
+ * Management:    https://landscape.canonical.com
+ * Support:       https://ubuntu.com/advantage
+
+  System information as of Fri Jun  1 18:27:42 UTC 2018
+
+  System load:  0.05               Process:               130
+  Usage of /:   2.6% of 233.24GB   Users logged in:       0
+  Memory usage: 2%                 IP address for enp3s0: 192.168.0.6
+  Swap usage:   0%
+
+31 packages can be updated.
+11 updates are security updates.
+
+
+The Programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the 
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by 
+applicable law.
+
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+jinia@jin:~$
+```
+
+
+## GNOME 설치
+
+```
+sudo apt-get update
+sudo apt-get upgrade
+```
+
+```
+sudo apt-get install gnome gnome-shell gnome-session
+```
+
+## 한글
+
+>Settings  
+-> Region & Language 패널에서 Manage Installed Languages 버튼 클릭  
+-> Language Support 창에서 Install / Remove Languages 버튼 클릭  
+-> Installed Languages 창에서 Korean을 찾아서 체크 -> Apply 버튼 클릭  
+-> Terminal 실행 -> sudo apt-get install ibus-hangul -> Terminal 종료  
+-> Region & Language 패널에서 Input Sources 의 것들은 제거 마이너스(-)   
+-> Region & Language 패널에서 Input Sources 의 새로운거 추가 플러스(+)  
+-> Add an Input Source 창에서 Korean 선택 -> Korean(Hangul) 선택 -> Add 클릭  
+
+
+설치프로그램들..  
+
+  * 크롬브라우저 설치 (인증서 또 추가해야함)  
+  
+  * Visual Studio Code  
+  
+  * Citrix Receiver ( Debian Package에서 Full Package와 Web Package 둘다 설치)  
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 나중에 확인할 것 
+
+* remount
+
+    file system table 의 options을 수정함. remount 하라고 하던데...  
+    /etc/fstab 파일을 수정하는 것임. options값을 바꿨음.  
+
+
+```
+sudo vi /etc/fstab
+```
+
+```
+jinia@jin:~$ sudo cat /etc/fstab
+[sudo] password for jinia: 
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda1 during installation
+UUID=d42a2744-2672-475f-9d6c-4223d2fdbb49 /               ext4    errors=remount-ro,noatime,discard        0       1
+# /boot was on /dev/sda5 during installation
+UUID=3bad1527-e2dc-4ecf-b2f1-9f15b6eeb8b7 /boot           ext4    errors=remount-ro,noatime,discard        0       2
+# /home was on /dev/sda7 during installation
+UUID=51c5417b-ca30-4c74-b028-381319f0fa51 /home           ext4    errors=remount-ro,noatime,discard        0       2
+# swap was on /dev/sda6 during installation
+UUID=08502cb2-b326-42fe-90ba-923e45913273 none            swap    sw              0       0
+```
+
+* 네트워크 확인
+
+```
+ping 192.168.41.1
+ping www.solutionpot.co.kr
+```
+
+nameservers의 addresses는 xxx.xxx.xxx.xxx 로 되어있으니, 적당히 본인이 사용하는 DNS ip를 적길.. 
+
+```
+jinia@jin:~$ cat /etc/netplan/01-netcfg.yaml 
+# This file describes the network interfaces available on your system
+# For more information, see netplan(5).
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp3s0:
+      addresses: [ 192.168.41.81/24 ]
+      gateway4: 192.168.41.1
+      nameservers:
+              addresses: [ xxx.xxx.xxx.xxx, xxx.xxx.xxx.xxx ]
+jinia@jin:~$ 
+```
+
+* Firefox 실행해서 인증서(POSCOICT_CA_256.cer) 추가  
+
+    리눅스 PC에서 인정서 가져올 디렉토리(extra) 생성했고.. 
+    extra 디렉토리에서 ftp로 확보한 인증서 파일 가져왔음. 
+
+    >Firefox 실행  
+    -> 메뉴(우측상단)  
+    -> Preferences  
+    -> Privacy & Security  
+    -> Certificates  
+    -> View Certificates  
+    -> import  
+    -> Other Locations  
+    -> /usr/share/ca-certificates/extra/POSCOICT_CA_256.cer  
+    -> Check All (3 Trust)  
+    -> OK
+
+```
+cd /usr/share/ca-certificates
+ls -al
+sudo mkdir extra
+cd extra
+sudo sftp root@192.168.41.141
+cd /usr/local
+get POSCOICT_CA_256.cer
+quit
+ls -al
+```
+
+
+
