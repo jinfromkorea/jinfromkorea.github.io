@@ -89,7 +89,7 @@ $
 
 Configure > Settings > Tools > Server Certifications 에서 인증서(POSCOICT_CA_256.crt) 추가함.
 
-### Project Import
+### 기존 Maven Project Import
 
 Maven Project를 Import 할때,  pom type인 경우 project root에 source 추가하지 않겠다고 선택하고, Finish를 누름.
 
